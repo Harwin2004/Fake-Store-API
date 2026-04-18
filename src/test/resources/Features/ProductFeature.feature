@@ -6,10 +6,16 @@ Background:
   Scenario: Create product with valid details
     Given I have a valid product payload with title, price, description and category in product
     When I send a POST request to "/products" in product
-    Then the response status code should be 201
-    And the response should contain created product details
+    Then the response status code should be 201 for product
+    And the response should contain product details
     And validate the title , price and category in product
-    And the response time should be less than 5000 ms in product
+    And the response time should be less than 5000 ms for product
     
     
-  
+  Scenario: Retrieve all products with valid request 
+
+    When I have send a GET request to "/products" retrieve all products
+    Then the response status code should be 200 for product
+    And the response should contain product details 
+    And the response time should be less than 3000 ms for product
+    

@@ -28,7 +28,7 @@ public class StepDefinitionProducts {
 	    	p=new PojoClasses.Product(2,"Mens Casual Premium Slim Fit T-Shirt" , 100, "Comfortable and stylish slim fit t-shirt made from high-quality cotton", "men's clothing", "https://urturms.com/cdn/shop/files/02_ae9d1db6-d9c9-48e7-b266-08f4bb4ee33c.jpg?v=1733376000");
 	    	
 	    	
-//	    	
+    	
 	    }
 
 	    @When("I send a POST request to {string} in product")
@@ -39,13 +39,19 @@ public class StepDefinitionProducts {
 	                .body(p)
 	                .post(endpoint);
 	    }
+	    @When("I have send a GET request to {string} retrieve all products")
+	    public void get_request(String endpoint) {
+	        response =  RestAssured.given()
+	                    .when()
+	                    .get(endpoint);
+	    }
 
-	    @Then("the response status code should be {int}")
+	    @Then("the response status code should be {int} for product")
 	    public void validateStatusCode(int statusCode) {
 	        Assert.assertEquals(statusCode, response.getStatusCode());
 	    }
 
-	    @Then("the response should contain created product details")
+	    @Then("the response should contain product details")
 	    public void validateResponseBody() {
 	        Assert.assertNotNull(response.jsonPath().get("id"));
 	        Assert.assertNotNull(response.jsonPath().get("title"));
@@ -64,7 +70,7 @@ public class StepDefinitionProducts {
 
 	    }
 
-	    @Then("the response time should be less than {int} ms in product")
+	    @Then("the response time should be less than {int} ms for product")
 	    public void validateResponseTime(int time) {
 	        Assert.assertTrue(response.getTime() < time);
 	    }
