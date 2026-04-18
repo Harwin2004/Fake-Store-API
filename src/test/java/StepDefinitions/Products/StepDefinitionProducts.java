@@ -11,6 +11,7 @@ public class StepDefinitionProducts {
 
 	    Response response;
 	    String requestBody;
+	    PojoClasses.Product p;
 	    
 
 
@@ -23,14 +24,11 @@ public class StepDefinitionProducts {
 
 	    @Given("I have a valid product payload with title, price, description and category in product")
 	    public void setProductPayload() {
-	    	requestBody = "{\n" +
-	    	        "\"id\": 2,\n" +
-	    	        "\"title\": \"Mens Casual Premium Slim Fit T-Shirt\",\n" +
-	    	        "\"price\": 100,\n" +
-	    	        "\"description\": \"Comfortable and stylish slim fit t-shirt made from high-quality cotton, perfect for everyday wear.\",\n" +
-	    	        "\"category\": \"men's clothing\",\n" +
-	    	        "\"image\": \"https://urturms.com/cdn/shop/files/02_ae9d1db6-d9c9-48e7-b266-08f4bb4ee33c.jpg?v=1733376000\"\n" +
-	    	        "}";
+	    	
+	    	p=new PojoClasses.Product(2,"Mens Casual Premium Slim Fit T-Shirt" , 100, "Comfortable and stylish slim fit t-shirt made from high-quality cotton", "men's clothing", "https://urturms.com/cdn/shop/files/02_ae9d1db6-d9c9-48e7-b266-08f4bb4ee33c.jpg?v=1733376000");
+	    	
+	    	
+//	    	
 	    }
 
 	    @When("I send a POST request to {string} in product")
@@ -38,7 +36,7 @@ public class StepDefinitionProducts {
 	        response = RestAssured.given()
 	                .header("Content-Type", "application/json")
 	                .auth().basic(endpoint, endpoint)
-	                .body(requestBody)
+	                .body(p)
 	                .post(endpoint);
 	    }
 
