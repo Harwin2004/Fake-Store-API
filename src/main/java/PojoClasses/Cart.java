@@ -1,56 +1,42 @@
 package PojoClasses;
 
-import java.util.Arrays;
 
 public class Cart {
-	private int id;
-	private int userID;
-	private Product[] products;
-	
-	
-	public Cart(int id, int userID, Product[] products) {
-		super();
-		this.id = id;
-		this.userID = userID;
-		this.products = products;
-	}
 
+    private int userId;
+    private String date;
+    private Prod[] products;
 
-	public int getId() {
-		return id;
-	}
+    // Default constructor
+    public Cart() {}
 
+    public Cart(int userId, String date, Prod[] products) {
+        this.userId = userId;
+        this.date = date;
+        this.products = products;
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getUserId() {
+        return userId;
+    }
 
+    public void setUserId(int userId) {
+        this.userId = userId;
+    }
 
-	public int getUserID() {
-		return userID;
-	}
+    public String getDate() {
+        return date;
+    }
 
+    public void setDate(String date) {
+        this.date = date;
+    }
 
-	public void setUserID(int userID) {
-		this.userID = userID;
-	}
+    public Prod[] getProducts() {
+        return products;
+    }
 
-
-	public Product[] getProducts() {
-		return products;
-	}
-
-
-	public void setProducts(Product[] products) {
-		this.products = products;
-	}
-
-
-	@Override
-	public String toString() {
-		return "Cart [id=" + id + ", userID=" + userID + ", products=" + Arrays.toString(products) + "]";
-	}
-	
-	
-	
+    public void setProducts(Prod[] products) {
+        this.products = products;
+    }
 }
