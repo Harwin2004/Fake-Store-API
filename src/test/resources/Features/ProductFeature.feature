@@ -26,3 +26,10 @@ Background:
     Then the response status code should be 200 for product
     And the response should contain product details
     And the product ID in response should match the requested ID
+    
+   
+   Scenario: Retrieve product with non-existing product id
+ 
+    When I send a GET request to "/products/9999" with invalid product id 
+    Then the response status code should be 404 for product
+    And the response time should be less than 2000 ms for product

@@ -50,6 +50,14 @@ public class StepDefinitionProducts {
 	                    .when()
 	                    .get(endpoint);
 	    }
+	    
+	    @When("I send a GET request to {string} with invalid product id")
+	    public void getRequestInvalid(String endpoint) {
+	        response =  RestAssured.given()
+                    .when()
+                    .get(endpoint);
+	    }
+	      
 
 	    @Then("the response status code should be {int} for product")
 	    public void validateStatusCode(int statusCode) {
