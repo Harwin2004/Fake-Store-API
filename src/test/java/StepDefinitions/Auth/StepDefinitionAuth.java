@@ -39,6 +39,12 @@ public class StepDefinitionAuth {
         authObj = new PojoClasses.Auth(null, "83r5^_");
     }
    
+    @Given("I have login credentials with missing password")
+    public void setLoginPayloadMissingPassword() {
+
+        authObj = new PojoClasses.Auth("mor_2314", null);
+    }
+    
     @Then("the response status code should be {int}")
     public void validateStatusCode(int statusCode) {
         Assert.assertEquals(response.getStatusCode(), statusCode);
