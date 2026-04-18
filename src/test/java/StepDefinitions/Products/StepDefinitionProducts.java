@@ -10,7 +10,6 @@ public class StepDefinitionProducts {
 	
 
 	    Response response;
-	    String requestBody;
 	    PojoClasses.Product p;
 	    
 
@@ -25,9 +24,7 @@ public class StepDefinitionProducts {
 	    @Given("I have a valid product payload with title, price, description and category in product")
 	    public void setProductPayload() {
 	    	
-	    	p=new PojoClasses.Product(2,"Mens Casual Premium Slim Fit T-Shirt" , 100, "Comfortable and stylish slim fit t-shirt made from high-quality cotton", "men's clothing", "https://urturms.com/cdn/shop/files/02_ae9d1db6-d9c9-48e7-b266-08f4bb4ee33c.jpg?v=1733376000");
-	    	
-	    	
+	    	p=new PojoClasses.Product(2,"Mens Casual Premium Slim Fit T-Shirt" , 100, "Comfortable and stylish slim fit t-shirt made from high-quality cotton", "men's clothing", "https://urturms.com/cdn/shop/files/02_ae9d1db6-d9c9-48e7-b266-08f4bb4ee33c.jpg?v=1733376000");	
     	
 	    }
 
@@ -39,8 +36,16 @@ public class StepDefinitionProducts {
 	                .body(p)
 	                .post(endpoint);
 	    }
+	    
 	    @When("I have send a GET request to {string} retrieve all products")
 	    public void get_request(String endpoint) {
+	        response =  RestAssured.given()
+	                    .when()
+	                    .get(endpoint);
+	    }
+	    
+	    @When("I send a GET request to {string} with valid product id")
+	    public void getSingleRequest(String endpoint) {
 	        response =  RestAssured.given()
 	                    .when()
 	                    .get(endpoint);
@@ -73,6 +78,12 @@ public class StepDefinitionProducts {
 	    @Then("the response time should be less than {int} ms for product")
 	    public void validateResponseTime(int time) {
 	        Assert.assertTrue(response.getTime() < time);
+	    }
+	    
+	    @Then("the product ID in response should match the requested ID")
+	    public void validateID() {
+	        Assert.assertEquals(response.jsonPath().getInt("id"), 4);
+	
 	    }
 	
 

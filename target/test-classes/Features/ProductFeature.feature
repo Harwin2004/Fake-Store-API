@@ -19,3 +19,10 @@ Background:
     And the response should contain product details 
     And the response time should be less than 3000 ms for product
     
+
+  Scenario: Retrieve single product using valid product id
+   
+    When I send a GET request to "/products/4" with valid product id
+    Then the response status code should be 200 for product
+    And the response should contain product details
+    And the product ID in response should match the requested ID
