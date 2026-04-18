@@ -31,7 +31,13 @@ public class StepDefinitionAuth {
                 .body(authObj)   
                 .post(endpoint);
     }
+    
+    @Given("I have login credentials with missing username")
+    public void setInvalidLoginPayload() {
 
+        
+        authObj = new PojoClasses.Auth(null, "83r5^_");
+    }
    
     @Then("the response status code should be {int}")
     public void validateStatusCode(int statusCode) {
