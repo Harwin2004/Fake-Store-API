@@ -3,26 +3,26 @@ package PojoClasses;
 import java.util.Arrays;
 
 public class Cart {
-	private int id;
+	private String date;
 	private int userID;
 	private Product[] products;
 	
 	
-	public Cart(int id, int userID, Product[] products) {
+	public Cart(String  date, int userID, Product[] products) {
 		super();
-		this.id = id;
+		this.date = date;
 		this.userID = userID;
 		this.products = products;
 	}
 
 
-	public int getId() {
-		return id;
+	public String getId() {
+		return date;
 	}
 
 
-	public void setId(int id) {
-		this.id = id;
+	public void setId(String date) {
+		this.date = date;
 	}
 
 
@@ -48,7 +48,7 @@ public class Cart {
 
 	@Override
 	public String toString() {
-		return "Cart [id=" + id + ", userID=" + userID + ", products=" + Arrays.toString(products) + "]";
+		return "Cart [date=" + date + ", userID=" + userID + ", products=" + Arrays.toString(products) + "]";
 	}
 	
 	

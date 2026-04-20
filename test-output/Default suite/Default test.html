@@ -1,0 +1,218 @@
+<html>
+<head>
+<title>TestNG:  Default test</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Default test</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>5/4/0</td>
+</tr><tr>
+<td>Started on:</td><td>Mon Apr 20 08:57:31 IST 2026</td>
+</tr>
+<tr><td>Total time:</td><td>9 seconds (9131 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-failed'>
+<tr><td colspan='4' align='center'><b>FAILED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td><b>Attribute(s)</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='Runners.ProductRunner.runScenario()'><b>runScenario</b><br>Test class: Runners.ProductRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Retrieve product with negative product id", "Product API"</td>
+<td><div><pre>java.lang.AssertionError: expected [200] but found [400]
+	at org.testng.Assert.fail(Assert.java:110)
+	at org.testng.Assert.failNotEquals(Assert.java:1577)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:149)
+	at org.testng.Assert.assertEquals(Assert.java:131)
+	at org.testng.Assert.assertEquals(Assert.java:1418)
+	at org.testng.Assert.assertEquals(Assert.java:1382)
+	at org.testng.Assert.assertEquals(Assert.java:1428)
+	at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:127)
+	at ✽.the response status code should be 400 for product(file:///C:/Users/subha/git/Fake-Store-API/src/test/resources/Features/ProductFeature.feature:41)
+</pre></div><a href='#' onClick='toggleBox("stack-trace2126592388", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace2126592388'><pre>java.lang.AssertionError: expected [200] but found [400]
+	at org.testng.Assert.fail(Assert.java:110)
+	at org.testng.Assert.failNotEquals(Assert.java:1577)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:149)
+	at org.testng.Assert.assertEquals(Assert.java:131)
+	at org.testng.Assert.assertEquals(Assert.java:1418)
+	at org.testng.Assert.assertEquals(Assert.java:1382)
+	at org.testng.Assert.assertEquals(Assert.java:1428)
+	at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:127)
+	at ✽.the response status code should be 400 for product(file:///C:/Users/subha/git/Fake-Store-API/src/test/resources/Features/ProductFeature.feature:41)
+</pre></div></td>
+<td>0</td>
+<td>Runners.ProductRunner@5fe94a96</td></tr>
+<tr>
+<td title='Runners.ProductRunner.runScenario()'><b>runScenario</b><br>Test class: Runners.ProductRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Attempt to delete product using invalid or non-existing product id", "Product API"</td>
+<td><div><pre>java.lang.AssertionError: expected [200] but found [404]
+	at org.testng.Assert.fail(Assert.java:110)
+	at org.testng.Assert.failNotEquals(Assert.java:1577)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:149)
+	at org.testng.Assert.assertEquals(Assert.java:131)
+	at org.testng.Assert.assertEquals(Assert.java:1418)
+	at org.testng.Assert.assertEquals(Assert.java:1382)
+	at org.testng.Assert.assertEquals(Assert.java:1428)
+	at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:127)
+	at ✽.the response status code should be 404 for product(file:///C:/Users/subha/git/Fake-Store-API/src/test/resources/Features/ProductFeature.feature:59)
+</pre></div><a href='#' onClick='toggleBox("stack-trace1109466628", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1109466628'><pre>java.lang.AssertionError: expected [200] but found [404]
+	at org.testng.Assert.fail(Assert.java:110)
+	at org.testng.Assert.failNotEquals(Assert.java:1577)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:149)
+	at org.testng.Assert.assertEquals(Assert.java:131)
+	at org.testng.Assert.assertEquals(Assert.java:1418)
+	at org.testng.Assert.assertEquals(Assert.java:1382)
+	at org.testng.Assert.assertEquals(Assert.java:1428)
+	at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:127)
+	at ✽.the response status code should be 404 for product(file:///C:/Users/subha/git/Fake-Store-API/src/test/resources/Features/ProductFeature.feature:59)
+</pre></div></td>
+<td>0</td>
+<td>Runners.ProductRunner@5fe94a96</td></tr>
+<tr>
+<td title='Runners.ProductRunner.runScenario()'><b>runScenario</b><br>Test class: Runners.ProductRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Attempt to delete product using negative product id", "Product API"</td>
+<td><div><pre>java.lang.AssertionError: expected [200] but found [400]
+	at org.testng.Assert.fail(Assert.java:110)
+	at org.testng.Assert.failNotEquals(Assert.java:1577)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:149)
+	at org.testng.Assert.assertEquals(Assert.java:131)
+	at org.testng.Assert.assertEquals(Assert.java:1418)
+	at org.testng.Assert.assertEquals(Assert.java:1382)
+	at org.testng.Assert.assertEquals(Assert.java:1428)
+	at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:127)
+	at ✽.the response status code should be 400 for product(file:///C:/Users/subha/git/Fake-Store-API/src/test/resources/Features/ProductFeature.feature:64)
+</pre></div><a href='#' onClick='toggleBox("stack-trace1765747849", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace1765747849'><pre>java.lang.AssertionError: expected [200] but found [400]
+	at org.testng.Assert.fail(Assert.java:110)
+	at org.testng.Assert.failNotEquals(Assert.java:1577)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:149)
+	at org.testng.Assert.assertEquals(Assert.java:131)
+	at org.testng.Assert.assertEquals(Assert.java:1418)
+	at org.testng.Assert.assertEquals(Assert.java:1382)
+	at org.testng.Assert.assertEquals(Assert.java:1428)
+	at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:127)
+	at ✽.the response status code should be 400 for product(file:///C:/Users/subha/git/Fake-Store-API/src/test/resources/Features/ProductFeature.feature:64)
+</pre></div></td>
+<td>0</td>
+<td>Runners.ProductRunner@5fe94a96</td></tr>
+<tr>
+<td title='Runners.ProductRunner.runScenario()'><b>runScenario</b><br>Test class: Runners.ProductRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Retrieve product with non-existing product id", "Product API"</td>
+<td><div><pre>java.lang.AssertionError: expected [200] but found [404]
+	at org.testng.Assert.fail(Assert.java:110)
+	at org.testng.Assert.failNotEquals(Assert.java:1577)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:149)
+	at org.testng.Assert.assertEquals(Assert.java:131)
+	at org.testng.Assert.assertEquals(Assert.java:1418)
+	at org.testng.Assert.assertEquals(Assert.java:1382)
+	at org.testng.Assert.assertEquals(Assert.java:1428)
+	at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:127)
+	at ✽.the response status code should be 404 for product(file:///C:/Users/subha/git/Fake-Store-API/src/test/resources/Features/ProductFeature.feature:34)
+</pre></div><a href='#' onClick='toggleBox("stack-trace764490006", this, "Click to show all stack frames", "Click to hide stack frames")'>Click to show all stack frames</a>
+<div class='stack-trace' id='stack-trace764490006'><pre>java.lang.AssertionError: expected [200] but found [404]
+	at org.testng.Assert.fail(Assert.java:110)
+	at org.testng.Assert.failNotEquals(Assert.java:1577)
+	at org.testng.Assert.assertEqualsImpl(Assert.java:149)
+	at org.testng.Assert.assertEquals(Assert.java:131)
+	at org.testng.Assert.assertEquals(Assert.java:1418)
+	at org.testng.Assert.assertEquals(Assert.java:1382)
+	at org.testng.Assert.assertEquals(Assert.java:1428)
+	at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:127)
+	at ✽.the response status code should be 404 for product(file:///C:/Users/subha/git/Fake-Store-API/src/test/resources/Features/ProductFeature.feature:34)
+</pre></div></td>
+<td>0</td>
+<td>Runners.ProductRunner@5fe94a96</td></tr>
+</table><p>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td><b>Attribute(s)</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='Runners.ProductRunner.runScenario()'><b>runScenario</b><br>Test class: Runners.ProductRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Update product with valid id and modify fields", "Product API"</td>
+<td></td>
+<td>0</td>
+<td>Runners.ProductRunner@5fe94a96</td></tr>
+<tr>
+<td title='Runners.ProductRunner.runScenario()'><b>runScenario</b><br>Test class: Runners.ProductRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Create product with valid details", "Product API"</td>
+<td></td>
+<td>2</td>
+<td>Runners.ProductRunner@5fe94a96</td></tr>
+<tr>
+<td title='Runners.ProductRunner.runScenario()'><b>runScenario</b><br>Test class: Runners.ProductRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Retrieve single product using valid product id", "Product API"</td>
+<td></td>
+<td>0</td>
+<td>Runners.ProductRunner@5fe94a96</td></tr>
+<tr>
+<td title='Runners.ProductRunner.runScenario()'><b>runScenario</b><br>Test class: Runners.ProductRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Retrieve all products with valid request", "Product API"</td>
+<td></td>
+<td>1</td>
+<td>Runners.ProductRunner@5fe94a96</td></tr>
+<tr>
+<td title='Runners.ProductRunner.runScenario()'><b>runScenario</b><br>Test class: Runners.ProductRunner<br>Test method: Runs Cucumber Scenarios<br>Parameters: "Attempt to delete product using valid or existing product id", "Product API"</td>
+<td></td>
+<td>0</td>
+<td>Runners.ProductRunner@5fe94a96</td></tr>
+</table><p>
+</body>
+</html>
