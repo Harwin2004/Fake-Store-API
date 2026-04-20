@@ -45,6 +45,30 @@ public class StepDefinitionAuth {
         authObj = new PojoClasses.Auth("mor_2314", null);
     }
     
+ 
+    @Given("I have empty login request body")
+    public void setEmptyLoginPayload() {
+        authObj = null;   
+    }
+
+    
+    @When("I send a POST request to {string} for login with empty body")
+    public void sendLoginRequest1(String endpoint) {
+
+        if (authObj == null) {
+            
+            response = RestAssured.given()
+                    .header("Content-Type", "application/json")
+                    .body("{}")
+                    .post(endpoint);
+        } else {
+            response = RestAssured.given()
+                    .header("Content-Type", "application/json")
+                    .body(authObj)
+                    .post(endpoint);
+        }
+    }
+    
     @Then("the response status code should be {int}")
     public void validateStatusCode(int statusCode) {
         Assert.assertEquals(response.getStatusCode(), statusCode);
