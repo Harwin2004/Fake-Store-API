@@ -59,5 +59,10 @@ Background:
     Then the response status code should be 404 for product
     And the response time should be less than 3000 ms for product
     
+    Scenario: Attempt to delete product using negative product id
+    When I send a DELETE request to "/products/-1" with negative product id
+    Then the response status code should be 400 for product 
+    And the response time should be less than 3000 ms for product
+    
     
     

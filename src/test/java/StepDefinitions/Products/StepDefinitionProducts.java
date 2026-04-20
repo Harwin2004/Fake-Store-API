@@ -96,6 +96,14 @@ public class StepDefinitionProducts {
 	                .delete(endpoint);
 	    }
 	    
+	    @When("I send a DELETE request to {string} with negative product id")
+	    public void sendDELETERequestWithNegativeId(String endpoint) {
+
+	        response = RestAssured.given()
+	                .when()
+	                .delete(endpoint);
+	    }
+	    
 	    @Then("the response should contain updated product details")
 	    public void validateUpdatedResponseBody() {
 
