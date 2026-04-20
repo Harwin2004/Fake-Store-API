@@ -54,3 +54,10 @@ Background:
     Then the response status code should be 200 for product
     And the response time should be less than 3000 ms for product
     
+    Scenario: Attempt to delete product using invalid or non-existing product id
+    When I send a DELETE request to "/products/9999" with invalid product id
+    Then the response status code should be 404 for product
+    And the response time should be less than 3000 ms for product
+    
+    
+    

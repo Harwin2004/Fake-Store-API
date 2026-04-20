@@ -1,27 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="7" passed="5" failed="2" skipped="0">
+<testng-results ignored="0" total="8" passed="5" failed="3" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2026-04-20T08:46:58 IST" name="Default suite" finished-at="2026-04-20T08:47:05 IST" duration-ms="7087">
+  <suite started-at="2026-04-20T08:53:24 IST" name="Default suite" finished-at="2026-04-20T08:53:31 IST" duration-ms="6857">
     <groups>
       <group name="cucumber">
         <method signature="AbstractTestNGCucumberTests.runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" name="runScenario" class="io.cucumber.testng.AbstractTestNGCucumberTests"/>
       </group> <!-- cucumber -->
     </groups>
-    <test started-at="2026-04-20T08:46:58 IST" name="Default test" finished-at="2026-04-20T08:47:05 IST" duration-ms="7087">
+    <test started-at="2026-04-20T08:53:24 IST" name="Default test" finished-at="2026-04-20T08:53:31 IST" duration-ms="6857">
       <class name="Runners.ProductRunner">
-        <test-method is-config="true" signature="setUpClass(org.testng.ITestContext)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:46:58 IST" name="setUpClass" finished-at="2026-04-20T08:46:58 IST" duration-ms="365" status="PASS">
+        <test-method is-config="true" signature="setUpClass(org.testng.ITestContext)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:53:24 IST" name="setUpClass" finished-at="2026-04-20T08:53:25 IST" duration-ms="368" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[org.testng.TestRunner@553ce348]]>
+                <![CDATA[org.testng.TestRunner@ff5d4f1]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUpClass -->
-        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:46:58 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:47:01 IST" duration-ms="2960" status="PASS">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:53:25 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:53:28 IST" duration-ms="3449" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -37,7 +37,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runScenario -->
-        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:47:01 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:47:02 IST" duration-ms="1169" status="PASS">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:53:28 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:53:29 IST" duration-ms="532" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -53,7 +53,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runScenario -->
-        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:47:02 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:47:03 IST" duration-ms="449" status="PASS">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:53:29 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:53:29 IST" duration-ms="464" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -69,7 +69,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runScenario -->
-        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:47:03 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:47:03 IST" duration-ms="359" status="FAIL">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:53:29 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:53:30 IST" duration-ms="356" status="FAIL">
           <params>
             <param index="0">
               <value>
@@ -95,7 +95,7 @@ at org.testng.Assert.assertEquals(Assert.java:131)
 at org.testng.Assert.assertEquals(Assert.java:1418)
 at org.testng.Assert.assertEquals(Assert.java:1382)
 at org.testng.Assert.assertEquals(Assert.java:1428)
-at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:111)
+at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:119)
 at ✽.the response status code should be 404 for product(file:///C:/Users/subha/git/Fake-Store-API/src/test/resources/Features/ProductFeature.feature:34)
 ]]>
             </full-stacktrace>
@@ -103,7 +103,7 @@ at ✽.the response status code should be 404 for product(file:///C:/Users/subha
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runScenario -->
-        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:47:03 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:47:04 IST" duration-ms="870" status="FAIL">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:53:30 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:53:30 IST" duration-ms="361" status="FAIL">
           <params>
             <param index="0">
               <value>
@@ -129,7 +129,7 @@ at org.testng.Assert.assertEquals(Assert.java:131)
 at org.testng.Assert.assertEquals(Assert.java:1418)
 at org.testng.Assert.assertEquals(Assert.java:1382)
 at org.testng.Assert.assertEquals(Assert.java:1428)
-at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:111)
+at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:119)
 at ✽.the response status code should be 400 for product(file:///C:/Users/subha/git/Fake-Store-API/src/test/resources/Features/ProductFeature.feature:41)
 ]]>
             </full-stacktrace>
@@ -137,7 +137,7 @@ at ✽.the response status code should be 400 for product(file:///C:/Users/subha
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runScenario -->
-        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:47:04 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:47:05 IST" duration-ms="480" status="PASS">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:53:30 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:53:31 IST" duration-ms="504" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -153,7 +153,7 @@ at ✽.the response status code should be 400 for product(file:///C:/Users/subha
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runScenario -->
-        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:47:05 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:47:05 IST" duration-ms="328" status="PASS">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:53:31 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:53:31 IST" duration-ms="347" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -169,7 +169,41 @@ at ✽.the response status code should be 400 for product(file:///C:/Users/subha
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runScenario -->
-        <test-method is-config="true" signature="tearDownClass()[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:47:05 IST" name="tearDownClass" finished-at="2026-04-20T08:47:05 IST" duration-ms="52" status="PASS">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:53:31 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:53:31 IST" duration-ms="352" status="FAIL">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA["Attempt to delete product using invalid or non-existing product id"]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA["Product API"]]>
+              </value>
+            </param>
+          </params>
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[expected [200] but found [404]]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: expected [200] but found [404]
+at org.testng.Assert.fail(Assert.java:110)
+at org.testng.Assert.failNotEquals(Assert.java:1577)
+at org.testng.Assert.assertEqualsImpl(Assert.java:149)
+at org.testng.Assert.assertEquals(Assert.java:131)
+at org.testng.Assert.assertEquals(Assert.java:1418)
+at org.testng.Assert.assertEquals(Assert.java:1382)
+at org.testng.Assert.assertEquals(Assert.java:1428)
+at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:119)
+at ✽.the response status code should be 404 for product(file:///C:/Users/subha/git/Fake-Store-API/src/test/resources/Features/ProductFeature.feature:59)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- runScenario -->
+        <test-method is-config="true" signature="tearDownClass()[pri:0, instance:Runners.ProductRunner@5fe94a96]" started-at="2026-04-20T08:53:31 IST" name="tearDownClass" finished-at="2026-04-20T08:53:31 IST" duration-ms="64" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDownClass -->
