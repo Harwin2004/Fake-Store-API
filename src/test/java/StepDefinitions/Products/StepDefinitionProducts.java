@@ -79,7 +79,15 @@ public class StepDefinitionProducts {
 	                .when()
 	                .put(endpoint);
 	    }
+	    
+	    @When("I send a DELETE request to {string} to delete product")
+	    public void sendDELETERequest(String endpoint) {
 
+	        response = RestAssured.given()
+	                .when()
+	                .delete(endpoint);
+	    }
+	    
 	    @Then("the response should contain updated product details")
 	    public void validateUpdatedResponseBody() {
 

@@ -9,9 +9,9 @@
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
 <tr><th colspan="8">Default suite</th></tr>
-<tr><td><a href="#t0">Default test</a></td><td class="num">4</td><td class="num">0</td><td class="num">0</td><td class="num attn">2</td><td class="num">5,745</td><td></td><td></td></tr>
+<tr><td><a href="#t0">Default test</a></td><td class="num">5</td><td class="num">0</td><td class="num">0</td><td class="num attn">2</td><td class="num">7,087</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Default test &#8212; failed</th></tr><tr class="failedeven"><td rowspan="2">Runners.ProductRunner</td><td><a href="#m0">runScenario</a></td><td rowspan="2">1776654453409</td><td rowspan="2">648</td></tr><tr class="failedeven"><td><a href="#m1">runScenario</a></td></tr><tr><th colspan="4">Default test &#8212; passed</th></tr><tr class="passedeven"><td rowspan="4">Runners.ProductRunner</td><td><a href="#m2">runScenario</a></td><td rowspan="4">1776654454063</td><td rowspan="4">805</td></tr><tr class="passedeven"><td><a href="#m3">runScenario</a></td></tr><tr class="passedeven"><td><a href="#m4">runScenario</a></td></tr><tr class="passedeven"><td><a href="#m5">runScenario</a></td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Default test &#8212; failed</th></tr><tr class="failedeven"><td rowspan="2">Runners.ProductRunner</td><td><a href="#m0">runScenario</a></td><td rowspan="2">1776655023758</td><td rowspan="2">870</td></tr><tr class="failedeven"><td><a href="#m1">runScenario</a></td></tr><tr><th colspan="4">Default test &#8212; passed</th></tr><tr class="passedeven"><td rowspan="5">Runners.ProductRunner</td><td><a href="#m2">runScenario</a></td><td rowspan="5">1776655025113</td><td rowspan="5">328</td></tr><tr class="passedeven"><td><a href="#m3">runScenario</a></td></tr><tr class="passedeven"><td><a href="#m4">runScenario</a></td></tr><tr class="passedeven"><td><a href="#m5">runScenario</a></td></tr><tr class="passedeven"><td><a href="#m6">runScenario</a></td></tr></tbody>
 </table>
 <h2>Default test</h2><h3 id="m0">Runners.ProductRunner#runScenario</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>&quot;Retrieve product with negative product id&quot;</td><td>&quot;Product API&quot;</td></tr><tr><th colspan="2">Exception</th></tr><tr><td colspan="2"><div class="stacktrace">java.lang.AssertionError: expected [200] but found [400]
 	at org.testng.Assert.fail(Assert.java:110)
@@ -21,7 +21,7 @@
 	at org.testng.Assert.assertEquals(Assert.java:1418)
 	at org.testng.Assert.assertEquals(Assert.java:1382)
 	at org.testng.Assert.assertEquals(Assert.java:1428)
-	at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:103)
+	at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:111)
 	at ✽.the response status code should be 400 for product(file:///C:/Users/subha/git/Fake-Store-API/src/test/resources/Features/ProductFeature.feature:41)
 </div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 <h3 id="m1">Runners.ProductRunner#runScenario</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>&quot;Retrieve product with non-existing product id&quot;</td><td>&quot;Product API&quot;</td></tr><tr><th colspan="2">Exception</th></tr><tr><td colspan="2"><div class="stacktrace">java.lang.AssertionError: expected [200] but found [404]
@@ -32,12 +32,13 @@
 	at org.testng.Assert.assertEquals(Assert.java:1418)
 	at org.testng.Assert.assertEquals(Assert.java:1382)
 	at org.testng.Assert.assertEquals(Assert.java:1428)
-	at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:103)
+	at StepDefinitions.Products.StepDefinitionProducts.validateStatusCode(StepDefinitionProducts.java:111)
 	at ✽.the response status code should be 404 for product(file:///C:/Users/subha/git/Fake-Store-API/src/test/resources/Features/ProductFeature.feature:34)
 </div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m2">Runners.ProductRunner#runScenario</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>&quot;Update product with valid id and modify fields&quot;</td><td>&quot;Product API&quot;</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m2">Runners.ProductRunner#runScenario</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>&quot;Attempt to delete product using valid or existing product id&quot;</td><td>&quot;Product API&quot;</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 <h3 id="m3">Runners.ProductRunner#runScenario</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>&quot;Create product with valid details&quot;</td><td>&quot;Product API&quot;</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 <h3 id="m4">Runners.ProductRunner#runScenario</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>&quot;Retrieve all products with valid request&quot;</td><td>&quot;Product API&quot;</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 <h3 id="m5">Runners.ProductRunner#runScenario</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>&quot;Retrieve single product using valid product id&quot;</td><td>&quot;Product API&quot;</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h3 id="m6">Runners.ProductRunner#runScenario</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th></tr><tr class="param stripe"><td>&quot;Update product with valid id and modify fields&quot;</td><td>&quot;Product API&quot;</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>

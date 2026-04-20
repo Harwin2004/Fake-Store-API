@@ -49,3 +49,8 @@ Background:
     And validate the updated title , price and category in product
     And the response time should be less than 5000 ms for product
     
+    Scenario: Attempt to delete product using valid or existing product id
+    When I send a DELETE request to "/products/4" to delete product
+    Then the response status code should be 200 for product
+    And the response time should be less than 3000 ms for product
+    
