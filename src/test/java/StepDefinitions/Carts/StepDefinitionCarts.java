@@ -83,6 +83,14 @@ public class StepDefinitionCarts {
         
         response.prettyPrint();
     }
+    
+    @When("user deletes cart with id {int}")
+    public void deleteCart(int cartId) {
+
+        response = given()
+                .when()
+                .delete("/carts/" + cartId);
+    }
 
     @Then("user should receive status code {int}")
     public void verifyStatusCode(int statusCode) {
