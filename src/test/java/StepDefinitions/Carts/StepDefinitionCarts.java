@@ -73,6 +73,16 @@ public class StepDefinitionCarts {
                 .put("/carts/" + cartId);
         response.prettyPrint();
     }
+    
+    @When("user sends GET request to fetch all carts")
+    public void sendGetAllCartsRequest() {
+
+        response = given()
+                .when()
+                .get("/carts");
+        
+        response.prettyPrint();
+    }
 
     @Then("user should receive status code {int}")
     public void verifyStatusCode(int statusCode) {
@@ -106,5 +116,22 @@ public class StepDefinitionCarts {
                 .body("products", not(empty()))
                 .body("products.productId", everyItem(notNullValue()))
                 .body("products.quantity", everyItem(greaterThan(0)));
+    }
+    
+    @And("response should contain cart list")
+    public void validateCartList() {
+
+        response.then()
+                .body("$", not(empty()))
+
+                // main fields
+                .body("id", everyItem(notNullValue()))
+                .body("userId", everyItem(notNullValue()))
+                .body("date", everyItem(notNullValue()))
+
+                // products validation
+                .body("products", everyItem(not(empty())))
+                .body("products.productId.flatten()", everyItem(notNullValue()))
+                .body("products.quantity.flatten()", everyItem(greaterThan(0)));
     }
 }
