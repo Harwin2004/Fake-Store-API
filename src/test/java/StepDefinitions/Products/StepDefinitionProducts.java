@@ -38,7 +38,7 @@ public class StepDefinitionProducts {
 	    }
 	    
 	    @When("I have send a GET request to {string} retrieve all products")
-	    public void get_request(String endpoint) {
+	    public void getRequest(String endpoint) {
 	        response =  RestAssured.given()
 	                    .when()
 	                    .get(endpoint);

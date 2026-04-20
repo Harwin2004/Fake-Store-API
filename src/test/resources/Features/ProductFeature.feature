@@ -33,3 +33,12 @@ Background:
     When I send a GET request to "/products/9999" with invalid product id 
     Then the response status code should be 404 for product
     And the response time should be less than 2000 ms for product
+    
+    
+    Scenario: Retrieve product with negative product id
+ 
+    When I send a GET request to "/products/-100" with invalid product id 
+    Then the response status code should be 400 for product
+    And the response time should be less than 2000 ms for product
+    
+    
