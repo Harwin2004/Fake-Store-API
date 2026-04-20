@@ -20,6 +20,7 @@ Background:
     And the response time should be less than 3000 ms for product
     
 
+
   Scenario: Retrieve single product using valid product id
    
     When I send a GET request to "/products/4" with valid product id
