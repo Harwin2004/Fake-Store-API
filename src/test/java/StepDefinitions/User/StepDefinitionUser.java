@@ -2,32 +2,69 @@ package StepDefinitions.User;
 
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
+import java.util.Map;
 
 import Constants.Endpoints;
 import PojoClasses.User;
+import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
 import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
+import org.testng.Assert;
+
 public class StepDefinitionUser {
 
     Response response;
     User userPayload;
-    int userId;   
+    int userId;
+    String updateBody;
 
+    // ================= BASE =================
     @Given("the FakeStore User API is available")
-    public void the_fake_store_user_api_is_available() {
+    public void apiAvailable() {
         RestAssured.baseURI = "https://fakestoreapi.com";
     }
 
-    @Given("the user payload is prepared")
-    public void the_user_payload_is_prepared() {
-        userPayload = new User(21, "aamirfawaz", "aamir@gmail.com", "12345");
+    // ================= COMMON =================
+    @Given("the user id is {int}")
+    public void setUserId(int id) {
+        this.userId = id;
+    }
+
+    @Then("verify status code is {int}")
+    public void verifyStatusCode(int expectedStatus) {
+        int actual = response.getStatusCode();
+        System.out.println("Status Code: " + actual);
+
+        // 🔥 STRICT VALIDATION
+        Assert.assertEquals(actual, expectedStatus,
+                "Expected: " + expectedStatus + " but got: " + actual);
+    }
+
+    @Then("verify response time is under 2000 ms")
+    public void verifyResponseTime() {
+        long time = response.getTime();
+        System.out.println("Response Time: " + time);
+        Assert.assertTrue(time < 2000);
+    }
+
+    // ================= CREATE =================
+    @Given("the user payload is:")
+    public void setUserPayload(DataTable table) {
+        Map<String, String> row = table.asMaps().get(0);
+
+        userPayload = new User(
+                Integer.parseInt(row.get("id")),
+                row.get("username"),
+                row.get("email"),
+                row.get("password")
+        );
     }
 
     @When("the user sends a POST request to create a new user")
-    public void the_user_sends_a_post_request_to_create_a_new_user() {
+    public void createUser() {
         response = given()
                 .contentType(ContentType.JSON)
                 .body(userPayload)
@@ -35,60 +72,67 @@ public class StepDefinitionUser {
                 .post(Endpoints.USERS_POST);
     }
 
-    @Then("the user should be created successfully with status code {int}")
-    public void the_user_should_be_created_successfully_with_status_code(Integer statusCode) {
-        response.then().log().all();
-        response.then().statusCode(statusCode);
+    @Then("validate created user response")
+    public void validateCreatedUser() {
+        response.then().body("id", notNullValue());
+    }
 
+    // ================= GET ALL =================
+    @When("the user sends a GET request to fetch all users")
+    public void getAllUsers() {
+        response = given().when().get(Endpoints.USERS_GET_ALL_PRODUCT);
+    }
+
+    @Then("validate user list details")
+    public void validateUserList() {
         response.then()
-                .body("id", notNullValue());
+                .body("size()", greaterThan(0))
+                .body("[0].id", notNullValue())
+                .body("[0].username", notNullValue())
+                .body("[0].email", notNullValue());
     }
 
-   
-
-    @Given("the user id is {int}")
-    public void the_user_id_is(Integer id) {
-        userId = id;
-    }
-
+    // ================= GET SINGLE =================
     @When("the user sends a GET request to fetch the single user")
-    public void the_user_sends_a_get_request_to_fetch_the_single_user() {
+    public void getSingleUser() {
         response = given()
                 .pathParam("id", userId)
         .when()
                 .get(Endpoints.USERS_GET_SINGLE_PRODUCT + "/{id}");
     }
 
-    @Then("the single user should be fetched successfully with status code {int}")
-    public void the_single_user_should_be_fetched_successfully_with_status_code(Integer statusCode) {
-        response.then().log().all();
-        response.then().statusCode(statusCode);
+    // ================= UPDATE =================
+    @Given("the updated user payload is:")
+    public void setUpdatePayload(DataTable table) {
+        Map<String, String> row = table.asMaps().get(0);
 
-        response.then()
-                .body("id", equalTo(userId))
-                .body("username", notNullValue())
-                .body("email", notNullValue());
+        updateBody = "{\n" +
+                "\"username\": \"" + row.get("username") + "\",\n" +
+                "\"email\": \"" + row.get("email") + "\",\n" +
+                "\"password\": \"" + row.get("password") + "\"\n" +
+                "}";
     }
-   
 
-    @When("the user sends a GET request to fetch all users")
-    public void the_user_sends_a_get_request_to_fetch_all_users() {
+    @When("the user sends a PUT request to update the user")
+    public void updateUser() {
+        response = given()
+                .contentType(ContentType.JSON)
+                .body(updateBody)
+        .when()
+                .put(Endpoints.USERS_POST + "/" + userId);
+    }
+
+    @Then("validate updated user response")
+    public void validateUpdatedUser() {
+        Assert.assertEquals(response.jsonPath().getString("username"), "updatedUser");
+        Assert.assertEquals(response.jsonPath().getString("email"), "updated@gmail.com");
+    }
+
+    // ================= DELETE =================
+    @When("the user sends a DELETE request for the user")
+    public void deleteUser() {
         response = given()
         .when()
-                .get(Endpoints.USERS_GET_ALL_PRODUCT);
+                .delete(Endpoints.USERS_POST + "/" + userId);
     }
-
-    @Then("all users should be fetched successfully with status code {int}")
-    public void all_users_should_be_fetched_successfully_with_status_code(Integer statusCode) {
-        response.then().log().all();
-        response.then().statusCode(statusCode);
-
-        response.then()
-                .body("size()", greaterThan(0))   // list should not be empty
-                .body("[0].id", notNullValue())
-                .body("[0].username", notNullValue())
-                .body("[0].email", notNullValue());
-    }
-
-    
 }
