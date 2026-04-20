@@ -45,6 +45,16 @@ public class StepDefinitionCarts {
                 .post("/carts");
         response.prettyPrint();
     }
+    
+    @When("user sends GET request for cart with id {int}")
+    public void sendGetRequest(int cartId) {
+
+        response = given()
+                .when()
+                .get("/carts/" + cartId);
+    }
+    
+
 
     @Then("user should receive status code {int}")
     public void verifyStatusCode(int statusCode) {
@@ -67,4 +77,6 @@ public class StepDefinitionCarts {
                 .body("products.productId", everyItem(notNullValue()))
                 .body("products.quantity", everyItem(greaterThan(0)));
     }
+    
+
 }

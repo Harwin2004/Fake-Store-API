@@ -7,3 +7,17 @@ Feature: Cart API Functional Testing
     Then user should receive status code 201
     And response time should be less than 2000 ms
     And response should contain created cart details
+    
+
+  Scenario Outline: Retrieve cart with different cart IDs and validate response
+    Given user sets the base URI
+    When user sends GET request for cart with id <cartId>
+    Then user should receive status code <statusCode>
+    And response time should be less than <time> ms
+
+  Examples:
+    | cartId | statusCode | time |
+    | 1      | 200        | 2000  |
+    | 9999   | 404        | 2000  |
+    | -1     | 400        | 2000  |
+    
