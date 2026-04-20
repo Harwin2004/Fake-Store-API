@@ -37,7 +37,7 @@ Feature: Cart API Functional Testing
     
   Scenario Outline: Delete cart with different cart IDs
     Given user sets the base URI
-    When user deletes cart with id <cartId>    
+    When user deletes cart with id <cartId>      
     Then user should receive status code <statusCode>  
     And response time should be less than <time> ms  
 
