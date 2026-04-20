@@ -32,7 +32,6 @@ public class StepDefinitionProducts {
 	    public void sendPOSTRequest(String endpoint) {
 	        response = RestAssured.given()
 	                .header("Content-Type", "application/json")
-	                .auth().basic(endpoint, endpoint)
 	                .body(p)
 	                .post(endpoint);
 	    }
@@ -58,7 +57,47 @@ public class StepDefinitionProducts {
                     .get(endpoint);
 	    }
 	      
+	    @Given("I have a valid updated product payload with title, price, description and category")
+	    public void setUpdatedProductPayload() {
 
+	        p = new PojoClasses.Product(
+	                4,
+	                "Wireless Headphones Pro",
+	                59.99,
+	                "Updated premium wireless headphones",
+	                "Electronics",
+	                "https://example.com/updated-image.jpg"
+	        );
+	    }
+
+	    @When("I send a PUT request to {string} to update product")
+	    public void sendPUTRequest(String endpoint) {
+
+	        response = RestAssured.given()
+	                .header("Content-Type", "application/json")
+	                .body(p)
+	                .when()
+	                .put(endpoint);
+	    }
+
+	    @Then("the response should contain updated product details")
+	    public void validateUpdatedResponseBody() {
+
+	        Assert.assertNotNull(response.jsonPath().get("id"));
+	        Assert.assertNotNull(response.jsonPath().get("title"));
+	        Assert.assertNotNull(response.jsonPath().get("price"));
+	        Assert.assertNotNull(response.jsonPath().get("description"));
+	        Assert.assertNotNull(response.jsonPath().get("category"));
+	        Assert.assertNotNull(response.jsonPath().get("image"));
+	    }
+
+	    @Then("validate the updated title , price and category in product")
+	    public void validateUpdatedData() {
+
+	        Assert.assertEquals(response.jsonPath().getString("title"), "Wireless Headphones Pro");
+	        Assert.assertEquals(response.jsonPath().getDouble("price"), 59.99);
+	        Assert.assertEquals(response.jsonPath().getString("category"), "Electronics");
+	    }
 	    @Then("the response status code should be {int} for product")
 	    public void validateStatusCode(int statusCode) {
 	        Assert.assertEquals(statusCode, response.getStatusCode());

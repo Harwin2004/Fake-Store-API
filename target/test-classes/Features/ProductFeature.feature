@@ -41,4 +41,11 @@ Background:
     Then the response status code should be 400 for product
     And the response time should be less than 2000 ms for product
     
+    Scenario: Update product with valid id and modify fields
+    Given I have a valid updated product payload with title, price, description and category
+    When I send a PUT request to "/products/4" to update product
+    Then the response status code should be 200 for product
+    And the response should contain updated product details
+    And validate the updated title , price and category in product
+    And the response time should be less than 5000 ms for product
     
