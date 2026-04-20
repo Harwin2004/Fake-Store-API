@@ -54,7 +54,25 @@ public class StepDefinitionCarts {
                 .get("/carts/" + cartId);
     }
     
+    @And("user prepares updated cart payload")
+    public void prepareUpdatedPayload() {
 
+        Prod product1 = new Prod(11111, 5);  // updated quantity
+        Prod[] products = new Prod[]{product1};
+
+        requestBody = new Cart(1, "2020-03-02", products);
+    }
+    
+    @When("user sends PUT request to update cart with id {int}")
+    public void sendPutRequest(int cartId) {
+
+        response = given()
+                .header("Content-Type", "application/json")
+                .body(requestBody)
+                .when()
+                .put("/carts/" + cartId);
+        response.prettyPrint();
+    }
 
     @Then("user should receive status code {int}")
     public void verifyStatusCode(int statusCode) {
@@ -78,5 +96,15 @@ public class StepDefinitionCarts {
                 .body("products.quantity", everyItem(greaterThan(0)));
     }
     
+    @And("response should contain updated cart details")
+    public void validateUpdatedResponse() {
 
+        response.then()
+                .body("id", notNullValue())
+                .body("userId", notNullValue())
+                .body("date", notNullValue())
+                .body("products", not(empty()))
+                .body("products.productId", everyItem(notNullValue()))
+                .body("products.quantity", everyItem(greaterThan(0)));
+    }
 }

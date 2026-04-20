@@ -21,3 +21,10 @@ Feature: Cart API Functional Testing
     | 9999   | 404        | 2000  |
     | -1     | 400        | 2000  |
     
+    Scenario: Update cart with valid id
+    Given user sets the base URI
+    And user prepares updated cart payload
+    When user sends PUT request to update cart with id 1
+    Then user should receive status code 200
+    And response time should be less than 2000 ms
+    And response should contain updated cart details
