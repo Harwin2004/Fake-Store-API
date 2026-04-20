@@ -32,7 +32,7 @@ Feature: Cart API Functional Testing
     And user prepares updated cart payload
     When user sends PUT request to update cart with id 1
     Then user should receive status code 200
-    And response time should be less than 2000 ms
+    And response time should be less than 2000 ms  
     And response should contain updated cart details
     
   Scenario Outline: Delete cart with different cart IDs
