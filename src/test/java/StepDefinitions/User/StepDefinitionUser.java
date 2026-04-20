@@ -69,6 +69,26 @@ public class StepDefinitionUser {
                 .body("username", notNullValue())
                 .body("email", notNullValue());
     }
+   
+
+    @When("the user sends a GET request to fetch all users")
+    public void the_user_sends_a_get_request_to_fetch_all_users() {
+        response = given()
+        .when()
+                .get(Endpoints.USERS_GET_ALL_PRODUCT);
+    }
+
+    @Then("all users should be fetched successfully with status code {int}")
+    public void all_users_should_be_fetched_successfully_with_status_code(Integer statusCode) {
+        response.then().log().all();
+        response.then().statusCode(statusCode);
+
+        response.then()
+                .body("size()", greaterThan(0))   // list should not be empty
+                .body("[0].id", notNullValue())
+                .body("[0].username", notNullValue())
+                .body("[0].email", notNullValue());
+    }
 
     
 }
