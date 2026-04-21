@@ -1,12 +1,8 @@
-<<<<<<< HEAD
-target/
-.DS_Store
-target/
-test-output/
-.DS_Store
-=======
 # Maven build folder
 target/
+
+# macOS system file
+.DS_Store
 
 # Compiled files
 *.class
@@ -21,4 +17,3 @@ target/
 
 # Test output
 test-output/
->>>>>>> Auth
