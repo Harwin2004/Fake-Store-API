@@ -1,6 +1,5 @@
 package PojoClasses;
 
-
 public class Cart {
 
     private int userId;
@@ -10,6 +9,7 @@ public class Cart {
     // Default constructor
     public Cart() {}
 
+    // Parameterized constructor
     public Cart(int userId, String date, Prod[] products) {
         this.userId = userId;
         this.date = date;
