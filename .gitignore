@@ -1,5 +1,24 @@
+<<<<<<< HEAD
 target/
 .DS_Store
 target/
 test-output/
 .DS_Store
+=======
+# Maven build folder
+target/
+
+# Compiled files
+*.class
+
+# Logs
+*.log
+
+# Eclipse files
+.project
+.classpath
+.settings/
+
+# Test output
+test-output/
+>>>>>>> Auth
