@@ -1,16 +1,3 @@
-# Maven build folder
 target/
-
-# Compiled files
-*.class
-
-# Logs
-*.log
-
-# Eclipse files
-.project
-.classpath
-.settings/
-
-# Test output
 test-output/
+*.class
