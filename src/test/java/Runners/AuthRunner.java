@@ -10,6 +10,7 @@ import io.cucumber.testng.CucumberOptions;
         plugin = {"pretty", "html:target/fake-report.html"},
         monochrome = true
 )
+
 public class AuthRunner extends AbstractTestNGCucumberTests {
 	
 }
