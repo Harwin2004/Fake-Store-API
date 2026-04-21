@@ -8,6 +8,7 @@ Feature: Login API
   And validate token is generated
   And the response time should be less than 4000 ms in login
     
+    
   Scenario: Attempt login with missing username
   Given BaseURL is set for login
   And I have login credentials with missing username
