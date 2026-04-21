@@ -26,8 +26,6 @@ public class StepDefinitionAuth {
     @When("I send a POST request to {string} for login")
     public void sendLoginRequest(String endpoint) {
 
-    	
-    	
         response = RestAssured.given()
                 .header("Content-Type", "application/json")
                 .body(authObj)   
