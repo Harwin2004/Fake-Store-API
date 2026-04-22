@@ -31,11 +31,6 @@ public class StepDefinitionProducts {
 	    int productId;
 	    int negativeProductId;
 
-        @Given("BaseURL is set for product")
-        public void base() {
-        	RestAssured.baseURI="https://fakestoreapi.com";
-        }
-
 	    @Given("I prepare product payload from excel {string}")
 	    public void prepareProductPayload(String rowNumber) throws IOException  {
 

@@ -1,8 +1,5 @@
 Feature: Product API
-
-Background:
-    Given BaseURL is set for product
-    
+  
   Scenario Outline: Create product using Excel data
 
     Given I prepare product payload from excel "<rowNumber>"
