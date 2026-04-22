@@ -12,7 +12,11 @@ public class PropertiesUtil {
 
         if (prop == null) {
             prop = new Properties();
-            FileInputStream fis = new FileInputStream("src/test/resources/config.properties");
+
+            String path = System.getProperty("user.dir") 
+                        + "/config/config_fakeStoreAPI.properties";
+
+            FileInputStream fis = new FileInputStream(path);
             prop.load(fis);
         }
 
