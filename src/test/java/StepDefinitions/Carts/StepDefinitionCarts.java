@@ -23,13 +23,6 @@ public class StepDefinitionCarts {
     List<Cart> excelCartList = new ArrayList<>();
 
 
-    // =========================
-    // BASE URI
-    // =========================
-    @Given("user sets the base URI")
-    public void setBaseURI() {
-        baseURI = "https://fakestoreapi.com";
-    }
 
 
     // =========================

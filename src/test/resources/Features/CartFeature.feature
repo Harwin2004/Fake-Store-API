@@ -1,7 +1,5 @@
 Feature: Cart API Functional Testing
 
-  Background:
-    Given user sets the base URI
 
 
   # =========================
@@ -48,7 +46,7 @@ Feature: Cart API Functional Testing
   # 4. UPDATE CART (Excel Data)
   # =========================
   Scenario: Update cart using Excel data
-    And user reads updated cart data from Excel file "TestCases.xlsx"
+    And user reads updated cart data from Excel file "Cart_TestCases.xlsx"
     When user sends PUT request to update cart with id 1
     Then user should receive status code 200
     And response time should be less than 2000 ms

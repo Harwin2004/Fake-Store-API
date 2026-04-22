@@ -12,8 +12,8 @@ public class ExcelUtil {
 
         FileInputStream fis = new FileInputStream(path);
         Workbook wb = new XSSFWorkbook(fis);
-        Sheet sheet = wb.getSheet(sheetName);
 
+        Sheet sheet = wb.getSheet(sheetName);
         Row row = sheet.getRow(rowNum);
         Cell cell = row.getCell(colNum);
 
