@@ -23,11 +23,6 @@ public class StepDefinitionCarts {
     List<Cart> excelCartList = new ArrayList<>();
 
 
-
-
-    // =========================
-    // CREATE CART - DATATABLE
-    // =========================
     @And("user prepares cart payload with following products")
     public void prepareCartPayload(DataTable table) {
 
@@ -48,9 +43,6 @@ public class StepDefinitionCarts {
     }
 
 
-    // =========================
-    // POST
-    // =========================
     @When("user sends POST request to create cart")
     public void sendPostRequest() {
         response = given()
@@ -63,9 +55,6 @@ public class StepDefinitionCarts {
     }
 
 
-    // =========================
-    // GET ALL
-    // =========================
     @When("user sends GET request to fetch all carts")
     public void sendGetAllCartsRequest() {
 
@@ -77,9 +66,6 @@ public class StepDefinitionCarts {
     }
 
 
-    // =========================
-    // GET BY ID
-    // =========================
     @When("user sends GET request for cart with id {int}")
     public void sendGetRequest(int cartId) {
 
@@ -89,9 +75,6 @@ public class StepDefinitionCarts {
     }
 
 
-    // =========================
-    // DELETE
-    // =========================
     @When("user deletes cart with id {int}")
     public void deleteCart(int cartId) {
 
@@ -101,9 +84,6 @@ public class StepDefinitionCarts {
     }
 
 
-    // =========================
-    // EXCEL READ (MULTIPLE ROWS)
-    // =========================
     @And("user reads updated cart data from Excel file {string}")
     public void readUpdatedCartDataFromExcel(String fileName) throws IOException {
 
@@ -130,9 +110,6 @@ public class StepDefinitionCarts {
     }
 
 
-    // =========================
-    // PUT (LOOP THROUGH EXCEL)
-    // =========================
     @When("user sends PUT request to update cart with id {int}")
     public void sendPutRequest(int cartId) {
 
@@ -156,9 +133,6 @@ public class StepDefinitionCarts {
     }
 
 
-    // =========================
-    // COMMON VALIDATIONS
-    // =========================
     @Then("user should receive status code {int}")
     public void verifyStatusCode(int statusCode) {
         response.then().statusCode(statusCode);

@@ -2,9 +2,6 @@ Feature: Cart API Functional Testing
 
 
 
-  # =========================
-  # 1. CREATE CART (DataTable)
-  # =========================
   Scenario: Create cart with multiple products using DataTable
     And user prepares cart payload with following products
       | productId | quantity |
@@ -17,9 +14,6 @@ Feature: Cart API Functional Testing
     And response should contain created cart details
 
 
-  # =========================
-  # 2. GET ALL CARTS (Normal)
-  # =========================
   Scenario: Retrieve all carts and validate response
     When user sends GET request to fetch all carts
     Then user should receive status code 200
@@ -27,9 +21,6 @@ Feature: Cart API Functional Testing
     And response should contain cart list
 
 
-  # =========================
-  # 3. GET CART BY ID (Scenario Outline)
-  # =========================
   Scenario Outline: Retrieve cart with different cart IDs
     When user sends GET request for cart with id <cartId>
     Then user should receive status code <statusCode>
@@ -42,9 +33,6 @@ Feature: Cart API Functional Testing
     | -1     | 400        | 2000 |
 
 
-  # =========================
-  # 4. UPDATE CART (Excel Data)
-  # =========================
   Scenario: Update cart using Excel data
     And user reads updated cart data from Excel file "Cart_TestCases.xlsx"
     When user sends PUT request to update cart with id 1
@@ -53,9 +41,6 @@ Feature: Cart API Functional Testing
     And response should contain updated cart details
 
 
-  # =========================
-  # 5. DELETE CART (Scenario Outline)
-  # =========================
   Scenario Outline: Delete cart with different cart IDs
     When user deletes cart with id <cartId>
     Then user should receive status code <statusCode>
