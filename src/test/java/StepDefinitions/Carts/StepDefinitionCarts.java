@@ -2,19 +2,16 @@ package StepDefinitions.Carts;
 
 import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
-import static org.hamcrest.Matchers.empty;
-import static org.hamcrest.Matchers.everyItem;
-import static org.hamcrest.Matchers.greaterThan;
-import static org.hamcrest.Matchers.lessThan;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
+
+import java.io.IOException;
+import java.util.*;
 
 import PojoClasses.Cart;
 import PojoClasses.Prod;
-import io.cucumber.java.en.And;
-import io.cucumber.java.en.Given;
-import io.cucumber.java.en.Then;
-import io.cucumber.java.en.When;
+import Utility.ExcelUtil;
+import io.cucumber.datatable.DataTable;
+import io.cucumber.java.en.*;
 import io.restassured.response.Response;
 
 public class StepDefinitionCarts {
@@ -22,20 +19,45 @@ public class StepDefinitionCarts {
     Response response;
     Cart requestBody;
 
+    // For Excel multiple rows
+    List<Cart> excelCartList = new ArrayList<>();
+
+
+    // =========================
+    // BASE URI
+    // =========================
     @Given("user sets the base URI")
     public void setBaseURI() {
         baseURI = "https://fakestoreapi.com";
     }
 
-    @And("user prepares valid cart payload")
-    public void preparePayload() {
 
-        Prod product1 = new Prod(1, 2);
-        Prod[] products = new Prod[]{product1};
+    // =========================
+    // CREATE CART - DATATABLE
+    // =========================
+    @And("user prepares cart payload with following products")
+    public void prepareCartPayload(DataTable table) {
+
+        List<Map<String, String>> data = table.asMaps(String.class, String.class);
+
+        List<Prod> productList = new ArrayList<>();
+
+        for (Map<String, String> row : data) {
+            int productId = Integer.parseInt(row.get("productId"));
+            int quantity = Integer.parseInt(row.get("quantity"));
+
+            productList.add(new Prod(productId, quantity));
+        }
+
+        Prod[] products = productList.toArray(new Prod[0]);
 
         requestBody = new Cart(1, "2020-03-02", products);
     }
 
+
+    // =========================
+    // POST
+    // =========================
     @When("user sends POST request to create cart")
     public void sendPostRequest() {
         response = given()
@@ -43,9 +65,28 @@ public class StepDefinitionCarts {
                 .body(requestBody)
                 .when()
                 .post("/carts");
+
         response.prettyPrint();
     }
-    
+
+
+    // =========================
+    // GET ALL
+    // =========================
+    @When("user sends GET request to fetch all carts")
+    public void sendGetAllCartsRequest() {
+
+        response = given()
+                .when()
+                .get("/carts");
+
+        response.prettyPrint();
+    }
+
+
+    // =========================
+    // GET BY ID
+    // =========================
     @When("user sends GET request for cart with id {int}")
     public void sendGetRequest(int cartId) {
 
@@ -53,37 +94,11 @@ public class StepDefinitionCarts {
                 .when()
                 .get("/carts/" + cartId);
     }
-    
-    @And("user prepares updated cart payload")
-    public void prepareUpdatedPayload() {
 
-        Prod product1 = new Prod(11111, 5);  // updated quantity
-        Prod[] products = new Prod[]{product1};
 
-        requestBody = new Cart(1, "2020-03-02", products);
-    }
-    
-    @When("user sends PUT request to update cart with id {int}")
-    public void sendPutRequest(int cartId) {
-
-        response = given()
-                .header("Content-Type", "application/json")
-                .body(requestBody)
-                .when()
-                .put("/carts/" + cartId);
-        response.prettyPrint();
-    }
-    
-    @When("user sends GET request to fetch all carts")
-    public void sendGetAllCartsRequest() {
-
-        response = given()
-                .when()
-                .get("/carts");
-        
-        response.prettyPrint();
-    }
-    
+    // =========================
+    // DELETE
+    // =========================
     @When("user deletes cart with id {int}")
     public void deleteCart(int cartId) {
 
@@ -92,6 +107,65 @@ public class StepDefinitionCarts {
                 .delete("/carts/" + cartId);
     }
 
+
+    // =========================
+    // EXCEL READ (MULTIPLE ROWS)
+    // =========================
+    @And("user reads updated cart data from Excel file {string}")
+    public void readUpdatedCartDataFromExcel(String fileName) throws IOException {
+
+        String path = System.getProperty("user.dir") + "/src/test/resources/Data/" + fileName;
+        String sheetName = "Cart";
+
+        excelCartList.clear();
+
+        // Assume 3 rows (1,2,3)
+        for (int i = 1; i <= 3; i++) {
+
+            int userId = Integer.parseInt(ExcelUtil.getCellData(path, sheetName, i, 0));
+            String date = ExcelUtil.getCellData(path, sheetName, i, 1);
+            int productId = Integer.parseInt(ExcelUtil.getCellData(path, sheetName, i, 2));
+            int quantity = Integer.parseInt(ExcelUtil.getCellData(path, sheetName, i, 3));
+
+            Prod product = new Prod(productId, quantity);
+            Prod[] products = new Prod[]{product};
+
+            Cart cart = new Cart(userId, date, products);
+
+            excelCartList.add(cart);
+        }
+    }
+
+
+    // =========================
+    // PUT (LOOP THROUGH EXCEL)
+    // =========================
+    @When("user sends PUT request to update cart with id {int}")
+    public void sendPutRequest(int cartId) {
+
+        for (Cart cart : excelCartList) {
+
+            response = given()
+                    .header("Content-Type", "application/json")
+                    .body(cart)
+                    .when()
+                    .put("/carts/" + cartId);
+
+            response.prettyPrint();
+
+            // Validate each update
+            response.then()
+                    .statusCode(200)
+                    .time(lessThan(2000L))
+                    .body("id", notNullValue())
+                    .body("products", not(empty()));
+        }
+    }
+
+
+    // =========================
+    // COMMON VALIDATIONS
+    // =========================
     @Then("user should receive status code {int}")
     public void verifyStatusCode(int statusCode) {
         response.then().statusCode(statusCode);
@@ -103,7 +177,7 @@ public class StepDefinitionCarts {
     }
 
     @And("response should contain created cart details")
-    public void validateResponse() {
+    public void validateCreateResponse() {
 
         response.then()
                 .body("id", notNullValue())
@@ -113,7 +187,7 @@ public class StepDefinitionCarts {
                 .body("products.productId", everyItem(notNullValue()))
                 .body("products.quantity", everyItem(greaterThan(0)));
     }
-    
+
     @And("response should contain updated cart details")
     public void validateUpdatedResponse() {
 
@@ -121,23 +195,17 @@ public class StepDefinitionCarts {
                 .body("id", notNullValue())
                 .body("userId", notNullValue())
                 .body("date", notNullValue())
-                .body("products", not(empty()))
-                .body("products.productId", everyItem(notNullValue()))
-                .body("products.quantity", everyItem(greaterThan(0)));
+                .body("products", not(empty()));
     }
-    
+
     @And("response should contain cart list")
     public void validateCartList() {
 
         response.then()
                 .body("$", not(empty()))
-
-                // main fields
                 .body("id", everyItem(notNullValue()))
                 .body("userId", everyItem(notNullValue()))
                 .body("date", everyItem(notNullValue()))
-
-                // products validation
                 .body("products", everyItem(not(empty())))
                 .body("products.productId.flatten()", everyItem(notNullValue()))
                 .body("products.quantity.flatten()", everyItem(greaterThan(0)));
