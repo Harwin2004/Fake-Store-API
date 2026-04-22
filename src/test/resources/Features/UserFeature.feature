@@ -10,6 +10,13 @@ Feature: FakeStore User API Validation (Strict)
     Then verify status code is 201
     And validate created user response
     And verify response time is under 2000 ms
+    
+    # ================= NEGATIVE CREATE USER USING EXCEL =================
+Scenario: Create user with invalid data using excel
+  Given the FakeStore User API is available
+  When the user reads invalid post data from "src/test/resources/Data/User_Negative_Post_Data.xlsx" sheet "Invalid_Post_Data"
+  And the user sends POST request with excel data
+  Then validate negative post execution from excel
 
 
   # ================= GET ALL USERS =================
