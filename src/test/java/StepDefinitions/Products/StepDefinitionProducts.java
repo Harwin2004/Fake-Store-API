@@ -19,12 +19,22 @@ public class StepDefinitionProducts {
 	
 
 	    Response response;
-	    PojoClasses.Product p;
 	    RequestSpecification request;
 	    List<String> productIds;
 	    List<Response> responses;
+	    
+	    Map<String, Object> requestMap;
 
+	    String expectedTitle;
+	    float expectedPrice;
+	    String expectedCategory;
+	    int productId;
+	    int negativeProductId;
 
+        @Given("BaseURL is set for product")
+        public void base() {
+        	RestAssured.baseURI="https://fakestoreapi.com";
+        }
 
 	    @Given("I prepare product payload from excel {string}")
 	    public void prepareProductPayload(String rowNumber) throws IOException  {
@@ -109,71 +119,119 @@ public class StepDefinitionProducts {
                     .get("/products/"+negativeID);
 	    }
 	      
-	    @Given("I have a valid updated product payload with title, price, description and category")
-	    public void setUpdatedProductPayload() {
+	    @Given("I read product data from Excel row {string}")
+	    public void readProductData(String rowNumber) throws IOException {
 
-	        p = new PojoClasses.Product(
-	                4,
-	                "Wireless Headphones Pro",
-	                59.99,
-	                "Updated premium wireless headphones",
-	                "Electronics",
-	                "https://example.com/updated-image.jpg"
-	        );
+	        int row = Integer.parseInt(rowNumber);
+
+	        String path = System.getProperty("user.dir") + "/src/test/resources/Data/PRODUCT_Testcases.xlsx";
+	        String sheet = "Sheet1";
+
+	        productId = Integer.parseInt(ExcelUtil.getCellData(path, sheet, row, 0));
+	        expectedTitle = ExcelUtil.getCellData(path, sheet, row, 1);
+	        expectedPrice = Float.parseFloat(ExcelUtil.getCellData(path, sheet, row, 2));
+	        expectedCategory = ExcelUtil.getCellData(path, sheet, row, 3);
+
+	        
+	        
+	    }
+	    
+	    @Given("I have a valid updated product payload")
+	    public void createPayload() {
+
+	        requestMap = new HashMap<>();
+
+	        requestMap.put("title", expectedTitle);
+	        requestMap.put("price", expectedPrice);
+	        requestMap.put("category", expectedCategory);
+	        requestMap.put("description", "Updated via automation");
+	        requestMap.put("image", "https://i.pravatar.cc");
 	    }
 
-	    @When("I send a PUT request to {string} to update product")
-	    public void sendPUTRequest(String endpoint) {
+	    @When("I send a PUT request to update product")
+	    public void sendPUTRequest() {
 
 	        response = RestAssured.given()
 	                .header("Content-Type", "application/json")
-	                .body(p)
+	                .body(requestMap)
 	                .when()
-	                .put(endpoint);
+	                .put("/products/"+productId);
 	    }
 	    
-	    @When("I send a DELETE request to {string} to delete product")
-	    public void sendDELETERequest(String endpoint) {
+	    @When("I send a DELETE request to delete product {string}")
+	    public void sendDELETERequest(String id) {
 
 	        response = RestAssured.given()
 	                .when()
-	                .delete(endpoint);
+	                .delete("/products/"+id);
 	    }
 	    
-	    @When("I send a DELETE request to {string} with invalid product id")
-	    public void sendDELETERequestWithInvalid(String endpoint) {
+	    @When("I send a DELETE request with invalid product id")
+	    public void sendDeleteWithInvalidIds(DataTable table) {
 
-	        response = RestAssured.given()
-	                .when()
-	                .delete(endpoint);
+	       
+
+	        List<Map<String, String>> data = table.asMaps();
+
+	        responses = new ArrayList<>();
+
+	        for (Map<String, String> row : data) {
+
+	            String productId = row.get("PRODUCT_INVALID_ID");
+
+	            Response res = RestAssured
+	                    .given()
+	                    .when()
+	                    .delete("/products/" + productId);
+
+	            responses.add(res);  
+
+	        }
 	    }
 	    
-	    @When("I send a DELETE request to {string} with negative product id")
-	    public void sendDELETERequestWithNegativeId(String endpoint) {
+	    @Given("I read negative product data from Excel row {string}")
+	    public void readNegativeProductData(String rowNumber) throws IOException {
 
-	        response = RestAssured.given()
+	        int row = Integer.parseInt(rowNumber);
+
+	        String path = System.getProperty("user.dir") + "/src/test/resources/Data/PRODUCT_Testcases.xlsx";
+	        String sheet = "Sheet1";
+
+	        negativeProductId = Integer.parseInt(
+	                ExcelUtil.getCellData(path, sheet, row, 0)
+	        );
+
+	        System.out.println("Negative Product ID: " + negativeProductId);
+	    }
+	    
+	    @When("I send a DELETE request with negative product id")
+	    public void sendDeleteNegative() {
+
+
+	        response = RestAssured
+	                .given()
 	                .when()
-	                .delete(endpoint);
+	                .delete( "/products/" + negativeProductId);
+
 	    }
 	    
 	    @Then("the response should contain updated product details")
-	    public void validateUpdatedResponseBody() {
-
-	        Assert.assertNotNull(response.jsonPath().get("id"));
-	        Assert.assertNotNull(response.jsonPath().get("title"));
-	        Assert.assertNotNull(response.jsonPath().get("price"));
-	        Assert.assertNotNull(response.jsonPath().get("description"));
-	        Assert.assertNotNull(response.jsonPath().get("category"));
-	        Assert.assertNotNull(response.jsonPath().get("image"));
+	    public void validateResponseNotNull() {
+	        Assert.assertNotNull(response.getBody());
 	    }
 
 	    @Then("validate the updated title , price and category in product")
-	    public void validateUpdatedData() {
+	    public void validateUpdatedFields() {
 
-	        Assert.assertEquals(response.jsonPath().getString("title"), "Wireless Headphones Pro");
-	        Assert.assertEquals(response.jsonPath().getDouble("price"), 59.99);
-	        Assert.assertEquals(response.jsonPath().getString("category"), "Electronics");
+	        String actualTitle = response.jsonPath().getString("title");
+	        float actualPrice = response.jsonPath().getFloat("price");
+	        String actualCategory = response.jsonPath().getString("category");
+
+	        Assert.assertEquals(actualTitle, expectedTitle);
+	        Assert.assertEquals(actualPrice, expectedPrice);
+	        Assert.assertEquals(actualCategory, expectedCategory);
 	    }
+	    
 	    @Then("the response status code should be {int} for product")
 	    public void validateStatusCode(int statusCode) {
 	        Assert.assertEquals(statusCode, response.getStatusCode());

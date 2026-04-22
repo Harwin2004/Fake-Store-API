@@ -1,6 +1,7 @@
 Feature: Product API
 
-
+Background:
+    Given BaseURL is set for product
     
   Scenario Outline: Create product using Excel data
 
@@ -47,8 +48,8 @@ Feature: Product API
         | 10267     |
         | 7864      |
     When I send a GET request using invalid product id
-    Then the response status code should be 404 for product using datatable
-    And the response time should be less than 2000 ms for product using datatable
+    Then the response status code should be 404 for product
+    And the response time should be less than 2000 ms for product
     
     
     Scenario Outline: Retrieve product with negative product id
@@ -62,30 +63,58 @@ Feature: Product API
 		    | -100       |
 		    | -1         |
 		    | -50        |
-		    
-    
-    Scenario: Update product with valid id and modify fields
-    Given I have a valid updated product payload with title, price, description and category
-    When I send a PUT request to "/products/4" to update product
+
+
+
+
+
+Scenario: Update product with valid id and modify fields from Excel
+
+    Given I read product data from Excel row "<rowNumber>"
+    And I have a valid updated product payload
+    When I send a PUT request to update product
     Then the response status code should be 200 for product
     And the response should contain updated product details
     And validate the updated title , price and category in product
     And the response time should be less than 5000 ms for product
-    
-    Scenario: Attempt to delete product using valid or existing product id
-    When I send a DELETE request to "/products/4" to delete product
+
+Examples:
+    | rowNumber |
+    | 1         |
+    | 2         |
+    | 3         |
+
+Scenario Outline: Attempt to delete product using valid product id
+
+    When I send a DELETE request to delete product "<PRODUCT_VALID_ID>"
     Then the response status code should be 200 for product
     And the response time should be less than 3000 ms for product
-    
-    Scenario: Attempt to delete product using invalid or non-existing product id
-    When I send a DELETE request to "/products/9999" with invalid product id
-    Then the response status code should be 404 for product
-    And the response time should be less than 3000 ms for product
-    
-    Scenario: Attempt to delete product using negative product id
-    When I send a DELETE request to "/products/-1" with negative product id
+
+Examples:
+    | PRODUCT_VALID_ID |
+    | 1                |
+    | 2                |
+    | 3                |
+
+Scenario: Attempt to delete product using invalid or non-existing product id
+
+    When I send a DELETE request with invalid product id
+        | PRODUCT_INVALID_ID |
+        | 9999               |
+        | 8888               |
+        | 7777               |
+    Then the response status code should be 404 for product using datatable
+    And the response time should be less than 3000 ms for product using datatable
+
+Scenario Outline: Attempt to delete product using negative product id
+
+    Given I read negative product data from Excel row "<rowNumber>"
+    When I send a DELETE request with negative product id
     Then the response status code should be 400 for product 
     And the response time should be less than 3000 ms for product
-    
-    
-    
+
+Examples:
+    | rowNumber |
+    | 1         |
+    | 2         |
+    | 3         |
