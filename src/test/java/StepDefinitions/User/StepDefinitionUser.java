@@ -3,81 +3,67 @@ package StepDefinitions.User;
 import static io.restassured.RestAssured.*;
 import static org.hamcrest.Matchers.*;
 
-import java.util.Map;
-import java.util.List;
-import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.*;
 
-import Constants.Endpoints;
-import PojoClasses.User;
-import Utility.ExcelUtility;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
-import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 
-import org.testng.Assert;
+import PojoClasses.User;
+import Utility.ExcelUtility;
 
 public class StepDefinitionUser {
 
-    Response response;
-    User userPayload;
-    int userId;
-    String updateBody;
+    private Response response;
+    private User payload;
+    private String userId;
 
-    // Excel data for negative POST
-    List<Map<String, String>> excelData;
-    List<String> resultLogs = new ArrayList<>();
+    private List<Map<String, String>> excelData;
+    private List<String> resultLogs = new ArrayList<>();
 
-    // ================= BASE =================
-    @Given("the FakeStore User API is available")
-    public void apiAvailable() {
-        RestAssured.baseURI = "https://fakestoreapi.com";
-    }
+    private static final String BASE_URI = "https://fakestoreapi.com";
 
     // ================= COMMON =================
-    @Given("the user id is {int}")
+
+    @Given("the FakeStore User API is available")
+    public void apiAvailable() {
+        baseURI = BASE_URI;
+    }
+
+    @And("the user id is {int}")
     public void setUserId(int id) {
-        this.userId = id;
+        this.userId = String.valueOf(id);
     }
 
-    @Then("verify status code is {int}")
-    public void verifyStatusCode(int expectedStatus) {
-        int actual = response.getStatusCode();
-        System.out.println("Status Code: " + actual);
+    // ================= CREATE USER =================
 
-        Assert.assertEquals(actual, expectedStatus,
-                "Expected: " + expectedStatus + " but got: " + actual);
-    }
-
-    @Then("verify response time is under 2000 ms")
-    public void verifyResponseTime() {
-        long time = response.getTime();
-        System.out.println("Response Time: " + time);
-        Assert.assertTrue(time < 2000, "Response time is more than 2000 ms");
-    }
-
-    // ================= CREATE =================
     @Given("the user payload is:")
     public void setUserPayload(DataTable table) {
-        Map<String, String> row = table.asMaps().get(0);
 
-        userPayload = new User(
-                Integer.parseInt(row.get("id")),
-                row.get("username"),
-                row.get("email"),
-                row.get("password")
+        Map<String, String> data = table.asMaps().get(0);
+
+        payload = new User(
+                Integer.parseInt(data.get("id")),
+                data.get("username"),
+                data.get("email"),
+                data.get("password")
         );
     }
 
     @When("the user sends a POST request to create a new user")
     public void createUser() {
-        response = given()
+
+        response =
+            given()
+                .log().all()
                 .contentType(ContentType.JSON)
-                .body(userPayload)
-        .when()
-                .post(Endpoints.USERS_POST);
+                .body(payload)
+            .when()
+                .post("/users")
+            .then()
+                .log().all()
+                .extract().response();
     }
 
     @Then("validate created user response")
@@ -85,16 +71,23 @@ public class StepDefinitionUser {
         response.then().body("id", notNullValue());
     }
 
-    // ================= GET ALL =================
+    // ================= GET ALL USERS =================
+
     @When("the user sends a GET request to fetch all users")
     public void getAllUsers() {
-        response = given()
-                .when()
-                .get(Endpoints.USERS_GET_ALL_PRODUCT);
+
+        response =
+            given()
+            .when()
+                .get("/users")
+            .then()
+                .log().all()
+                .extract().response();
     }
 
     @Then("validate user list details")
     public void validateUserList() {
+
         response.then()
                 .body("size()", greaterThan(0))
                 .body("[0].id", notNullValue())
@@ -102,120 +95,202 @@ public class StepDefinitionUser {
                 .body("[0].email", notNullValue());
     }
 
-    // ================= GET SINGLE =================
+    // ================= GET SINGLE USER =================
+
     @When("the user sends a GET request to fetch the single user")
     public void getSingleUser() {
-        response = given()
-                .pathParam("id", userId)
-        .when()
-                .get(Endpoints.USERS_GET_SINGLE_PRODUCT + "/{id}");
+
+        response =
+            given()
+            .when()
+                .get("/users/" + userId)
+            .then()
+                .log().all()
+                .extract().response();
     }
 
-    // ================= UPDATE =================
-    @Given("the updated user payload is:")
-    public void setUpdatePayload(DataTable table) {
-        Map<String, String> row = table.asMaps().get(0);
+    // ================= UPDATE USER =================
 
-        updateBody = "{\n" +
-                "\"username\": \"" + row.get("username") + "\",\n" +
-                "\"email\": \"" + row.get("email") + "\",\n" +
-                "\"password\": \"" + row.get("password") + "\"\n" +
-                "}";
+    @And("the updated user payload is:")
+    public void setUpdatedUser(DataTable table) {
+
+        Map<String, String> data = table.asMaps().get(0);
+
+        payload = new User();
+        payload.setUsername(data.get("username"));
+        payload.setEmail(data.get("email"));
+        payload.setPassword(data.get("password"));
     }
 
     @When("the user sends a PUT request to update the user")
     public void updateUser() {
-        response = given()
+
+        response =
+            given()
+                .log().all()
                 .contentType(ContentType.JSON)
-                .body(updateBody)
-        .when()
-                .put(Endpoints.USERS_POST + "/" + userId);
+                .body(payload)
+            .when()
+                .put("/users/" + userId)
+            .then()
+                .log().all()
+                .extract().response();
     }
 
     @Then("validate updated user response")
     public void validateUpdatedUser() {
-        Assert.assertEquals(response.jsonPath().getString("username"), "updatedUser");
-        Assert.assertEquals(response.jsonPath().getString("email"), "updated@gmail.com");
+
+        response.then()
+                .body("username", equalTo(payload.getUsername()))
+                .body("email", equalTo(payload.getEmail()));
     }
 
-    // ================= DELETE =================
+    @And("validate error response")
+    public void validateErrorResponse() {
+        response.then().body(notNullValue());
+    }
+
+    // ================= DELETE USER =================
+
     @When("the user sends a DELETE request for the user")
     public void deleteUser() {
-        response = given()
-        .when()
-                .delete(Endpoints.USERS_POST + "/" + userId);
+
+        response =
+            given()
+                .log().all()
+            .when()
+                .delete("/users/" + userId)
+            .then()
+                .log().all()
+                .extract().response();
     }
 
-    // ================= NEGATIVE POST USING EXCEL =================
-    @When("the user reads invalid post data from {string} sheet {string}")
-    public void readInvalidPostData(String filePath, String sheetName) {
+    // ================= EXCEL (GENERIC READER) =================
+
+    @When("the user reads data from {string} sheet {string}")
+    public void readExcelData(String filePath, String sheetName) {
+
         excelData = ExcelUtility.getExcelData(filePath, sheetName);
 
         if (excelData == null || excelData.isEmpty()) {
-            throw new RuntimeException("Excel data is empty or file not found");
+            throw new RuntimeException(" Excel data is empty for sheet: " + sheetName);
         }
 
-        System.out.println("Excel loaded successfully: " + excelData.size() + " rows");
+        System.out.println(" Excel Loaded → Sheet: " + sheetName + " Rows: " + excelData.size());
     }
 
-    @When("the user sends POST request with excel data")
-    public void sendPostRequestWithExcelData() {
+    // ================= NEGATIVE POST FROM EXCEL =================
+
+    @And("the user sends POST request with excel data")
+    public void postFromExcel() {
 
         resultLogs.clear();
 
         for (Map<String, String> row : excelData) {
 
-            String testCase = row.get("testcase");
-            String idValue = row.get("id");
-            String username = row.get("username");
-            String email = row.get("email");
-            String password = row.get("password");
-
-            int expectedStatus = (int) Double.parseDouble(row.get("expectedStatus").trim());
-
             Map<String, Object> requestBody = new HashMap<>();
 
-            if (idValue != null && !idValue.trim().isEmpty()) {
-                requestBody.put("id", (int) Double.parseDouble(idValue.trim()));
+            if (row.get("id") != null && !row.get("id").isEmpty()) {
+                requestBody.put("id", (int) Double.parseDouble(row.get("id")));
             }
-            if (username != null && !username.trim().isEmpty()) {
-                requestBody.put("username", username.trim());
+            if (row.get("username") != null) {
+                requestBody.put("username", row.get("username"));
             }
-            if (email != null && !email.trim().isEmpty()) {
-                requestBody.put("email", email.trim());
+            if (row.get("email") != null) {
+                requestBody.put("email", row.get("email"));
             }
-            if (password != null && !password.trim().isEmpty()) {
-                requestBody.put("password", password.trim());
+            if (row.get("password") != null) {
+                requestBody.put("password", row.get("password"));
             }
 
-            System.out.println("======================================");
-            System.out.println("Executing TestCase: " + testCase);
-            System.out.println("Request Body: " + requestBody);
+            int expectedStatus = (int) Double.parseDouble(row.get("expectedStatus"));
 
-            response = given()
+            Response res =
+                given()
                     .contentType(ContentType.JSON)
                     .body(requestBody)
+                .when()
+                    .post("/users")
+                .then()
+                    .extract().response();
+
+            int actualStatus = res.getStatusCode();
+
+            if (actualStatus != expectedStatus) {
+                throw new AssertionError(
+                        " POST FAILED\nExpected: " + expectedStatus +
+                        "\nActual: " + actualStatus +
+                        "\nResponse: " + res.asString()
+                );
+            }
+
+            resultLogs.add("POST → Expected: " + expectedStatus + " | Actual: " + actualStatus);
+        }
+    }
+
+    // ================= DELETE FROM EXCEL =================
+
+    @And("the user sends DELETE request using excel data")
+    public void deleteFromExcel() {
+
+        for (Map<String, String> row : excelData) {
+
+            String id = row.get("id");
+            int expectedStatus = (int) Double.parseDouble(row.get("status"));
+
+            Response res =
+                given()
             .when()
-                    .post(Endpoints.USERS_POST);
+                .delete("/users/" + id)
+            .then()
+                .extract().response();
 
-            int actualStatus = response.getStatusCode();
+            int actualStatus = res.getStatusCode();
 
-            System.out.println("Expected Status: " + expectedStatus);
-            System.out.println("Actual Status  : " + actualStatus);
-            System.out.println("Response Body  : " + response.getBody().asPrettyString());
-
-            resultLogs.add("TestCase: " + testCase + " | Expected: " + expectedStatus + " | Actual: " + actualStatus);
-
-            Assert.assertEquals(actualStatus, expectedStatus,
-                    "Failed for TestCase: " + testCase);
+            if (actualStatus != expectedStatus) {
+                throw new AssertionError(
+                        " DELETE FAILED for ID: " + id +
+                        "\nExpected: " + expectedStatus +
+                        "\nActual: " + actualStatus
+                );
+            }
         }
     }
 
     @Then("validate negative post execution from excel")
-    public void validateNegativePostExecutionFromExcel() {
-        System.out.println("======== FINAL RESULT ========");
-        for (String log : resultLogs) {
-            System.out.println(log);
+    public void validateExcelResults() {
+
+        System.out.println("====== EXECUTION SUMMARY ======");
+        resultLogs.forEach(System.out::println);
+    }
+
+    @Then("validate status code from excel")
+    public void validateDeleteExcel() {
+        System.out.println(" Excel DELETE validation completed");
+    }
+
+    // ================= STATUS CODE =================
+
+    @Then("verify status code is {int}")
+    public void verifyStatusCode(int expectedStatus) {
+
+        int actualStatus = response.getStatusCode();
+
+        if (actualStatus != expectedStatus) {
+            throw new AssertionError(
+                "\n STATUS CODE MISMATCH\n" +
+                "Expected: " + expectedStatus + "\n" +
+                "Actual  : " + actualStatus + "\n" +
+                "Response: " + response.asString()
+            );
         }
+    }
+
+    // ================= RESPONSE TIME =================
+
+    @And("verify response time is under {int} ms")
+    public void validateResponseTime(int time) {
+
+        response.then().time(lessThan((long) time));
     }
 }
