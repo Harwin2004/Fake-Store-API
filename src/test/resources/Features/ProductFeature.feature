@@ -1,46 +1,68 @@
 Feature: Product API
 
-Background:
-    Given BaseURL is set for product
+
     
-  Scenario: Create product with valid details
-    Given I have a valid product payload with title, price, description and category in product
-    When I send a POST request to "/products" in product
+  Scenario Outline: Create product using Excel data
+
+    Given I prepare product payload from excel "<rowNumber>"
+    When I send a POST request for product
     Then the response status code should be 201 for product
-    And the response should contain product details
-    And validate the title , price and category in product
+    And validate product fields from excel "<rowNumber>"
     And the response time should be less than 5000 ms for product
+
+		Examples:
+		    | rowNumber |
+		    | 1         |
+		    | 2         |
+		    | 3         |
     
-    
+  
   Scenario: Retrieve all products with valid request 
 
-    When I have send a GET request to "/products" retrieve all products
+    When I have send a GET request to retrieve all products
     Then the response status code should be 200 for product
     And the response should contain product details 
     And the response time should be less than 3000 ms for product
     
 
 
-  Scenario: Retrieve single product using valid product id
-   
-    When I send a GET request to "/products/4" with valid product id
+    Scenario Outline: Retrieve single product using valid product id
+
+    When I send a GET request with valid product id <PRODUCT_VALID_ID>
     Then the response status code should be 200 for product
-    And the response should contain product details
-    And the product ID in response should match the requested ID
-    
+    And validate product id from excel "<rowNumber>"
+
+		Examples:
+		    | rowNumber | PRODUCT_VALID_ID |
+		    | 1         | 1                |
+		    | 2         | 2                |
+		    | 3         | 3                |
+		    
    
    Scenario: Retrieve product with non-existing product id
- 
-    When I send a GET request to "/products/9999" with invalid product id 
-    Then the response status code should be 404 for product
-    And the response time should be less than 2000 ms for product
+
+    Given I have invalid product id:
+        | productId |
+        | 9999      |
+        | 10267     |
+        | 7864      |
+    When I send a GET request using invalid product id
+    Then the response status code should be 404 for product using datatable
+    And the response time should be less than 2000 ms for product using datatable
     
     
-    Scenario: Retrieve product with negative product id
- 
-    When I send a GET request to "/products/-100" with invalid product id 
+    Scenario Outline: Retrieve product with negative product id
+    
+    When I send a GET request using negative product id <negativeId>
     Then the response status code should be 400 for product
     And the response time should be less than 2000 ms for product
+
+		Examples:
+		    | negativeId |
+		    | -100       |
+		    | -1         |
+		    | -50        |
+		    
     
     Scenario: Update product with valid id and modify fields
     Given I have a valid updated product payload with title, price, description and category
