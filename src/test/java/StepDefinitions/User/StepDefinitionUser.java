@@ -22,14 +22,6 @@ public class StepDefinitionUser {
     private List<Map<String, String>> excelData;
     private List<String> resultLogs = new ArrayList<>();
 
-    private static final String BASE_URI = "https://fakestoreapi.com";
-
-    // ================= COMMON =================
-
-    @Given("the FakeStore User API is available")
-    public void apiAvailable() {
-        baseURI = BASE_URI;
-    }
 
     @And("the user id is {int}")
     public void setUserId(int id) {
