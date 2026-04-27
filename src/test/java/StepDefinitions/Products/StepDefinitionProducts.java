@@ -14,6 +14,7 @@ import io.cucumber.java.en.*;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
+import static Constants.Endpoints.*;
 
 public class StepDefinitionProducts {
 	
@@ -62,14 +63,14 @@ public class StepDefinitionProducts {
 	    public void sendPOSTRequest() {
 	        response = request
 	                  .when()
-	                .post("/products");
+	                .post(PRODUCT_POST);
 	    }
 	    
 	    @When("I have send a GET request to retrieve all products")
 	    public void getRequest() {
 	        response =  RestAssured.given()
 	                    .when()
-	                    .get("/products");
+	                    .get(PRODUCT_GET_ALL_PRODUCT);
 	    }
 	    
 	    @Given("I have invalid product id:")
@@ -88,8 +89,9 @@ public class StepDefinitionProducts {
 	    @When("I send a GET request with valid product id {int}")
 	    public void getSingleRequest(int productID) {
 	        response =  RestAssured.given()
+	        		    .pathParam("id", productID)
 	                    .when()
-	                    .get("/products/"+productID);
+	                    .get(PRODUCT_GET_SINGLE_PRODUCT);
 	    }
 	    
 	    @When("I send a GET request using invalid product id")
@@ -101,7 +103,8 @@ public class StepDefinitionProducts {
 
 	            Response res = RestAssured.given()
 	                            .when()
-	                            .get("/products/" + id);
+	                            .pathParam("id", id)
+	                            .get(PRODUCT_GET_SINGLE_PRODUCT);
 
 	            responses.add(res);
 	        }
@@ -111,7 +114,8 @@ public class StepDefinitionProducts {
 	    public void getRequestNegative(int negativeID) {
 	        response =  RestAssured.given()
                     .when()
-                    .get("/products/"+negativeID);
+                    .pathParam("id", negativeID)
+                    .get(PRODUCT_GET_SINGLE_PRODUCT);
 	    }
 	      
 	    @Given("I read product data from Excel row {string}")
@@ -149,16 +153,19 @@ public class StepDefinitionProducts {
 	        response = RestAssured.given()
 	                .header("Content-Type", "application/json")
 	                .body(requestMap)
+	                .pathParam("id", productId)
 	                .when()
-	                .put("/products/"+productId);
+	                
+	                .put(PRODUCT_UPDATE);
 	    }
 	    
 	    @When("I send a DELETE request to delete product {string}")
 	    public void sendDELETERequest(String id) {
 
 	        response = RestAssured.given()
+	        		.pathParam("id", id)
 	                .when()
-	                .delete("/products/"+id);
+	                .delete(PRODUCT_DELETE);
 	    }
 	    
 	    @When("I send a DELETE request with invalid product id")
@@ -176,8 +183,9 @@ public class StepDefinitionProducts {
 
 	            Response res = RestAssured
 	                    .given()
+	                    .pathParam("id", productId)
 	                    .when()
-	                    .delete("/products/" + productId);
+	                    .delete(PRODUCT_DELETE);
 
 	            responses.add(res);  
 
@@ -205,8 +213,9 @@ public class StepDefinitionProducts {
 
 	        response = RestAssured
 	                .given()
+	                .pathParam("id", negativeProductId)
 	                .when()
-	                .delete( "/products/" + negativeProductId);
+	                .delete( PRODUCT_DELETE);
 
 	    }
 	    

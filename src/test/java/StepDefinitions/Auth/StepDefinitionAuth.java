@@ -12,7 +12,7 @@ import io.cucumber.datatable.DataTable;
 import io.restassured.RestAssured;
 import io.restassured.response.Response;
 
-import Constants.Endpoints;
+import static Constants.Endpoints.*;
 import Utility.ExcelUtil;
 
 public class StepDefinitionAuth {
@@ -66,13 +66,7 @@ public class StepDefinitionAuth {
         }
     }
 
-    @Given("I have valid login credentials")
-    public void setValidLogin() {
-
-        requestMap = new HashMap<>();
-        requestMap.put("username", "mor_2314");
-        requestMap.put("password", "83r5^_");
-    }
+    
 
     @Given("I have username but no password")
     public void setUsernameOnly() {
@@ -104,7 +98,7 @@ public class StepDefinitionAuth {
                 .header("Content-Type", "application/json")
                 .body(requestMap)
                 .when()
-                .post(Endpoints.AUTH_POST);
+                .post(AUTH_POST);
 
         System.out.println("Response: " + response.asString());
     }

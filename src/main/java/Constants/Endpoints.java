@@ -7,8 +7,8 @@ public interface Endpoints {
 	String PRODUCT_POST = "/products";
 	String PRODUCT_GET_ALL_PRODUCT = "/products";
 	String PRODUCT_GET_SINGLE_PRODUCT = "/products/{id}";
-	String PRODUCT_UPDATE = "/product/{id}";
-	String PRODUCT_DELETE = "/product/{id}";
+	String PRODUCT_UPDATE = "/products/{id}";
+	String PRODUCT_DELETE = "/products/{id}";
 	
 	//Carts module endpoints
 	

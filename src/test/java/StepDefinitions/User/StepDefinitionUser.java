@@ -12,6 +12,7 @@ import io.restassured.response.Response;
 
 import PojoClasses.User;
 import Utility.ExcelUtility;
+import static Constants.Endpoints.*;
 
 public class StepDefinitionUser {
 
@@ -52,7 +53,7 @@ public class StepDefinitionUser {
                 .contentType(ContentType.JSON)
                 .body(payload)
             .when()
-                .post("/users")
+                .post(USERS_POST)
             .then()
                 .log().all()
                 .extract().response();
@@ -71,7 +72,7 @@ public class StepDefinitionUser {
         response =
             given()
             .when()
-                .get("/users")
+                .get(USERS_GET_ALL_PRODUCT)
             .then()
                 .log().all()
                 .extract().response();
@@ -95,7 +96,8 @@ public class StepDefinitionUser {
         response =
             given()
             .when()
-                .get("/users/" + userId)
+            	.pathParam("id", userId)
+                .get(USERS_GET_SINGLE_PRODUCT)
             .then()
                 .log().all()
                 .extract().response();
@@ -123,7 +125,8 @@ public class StepDefinitionUser {
                 .contentType(ContentType.JSON)
                 .body(payload)
             .when()
-                .put("/users/" + userId)
+            	.pathParam("id", userId)
+                .put(USERS_UPDATE)
             .then()
                 .log().all()
                 .extract().response();
@@ -151,7 +154,8 @@ public class StepDefinitionUser {
             given()
                 .log().all()
             .when()
-                .delete("/users/" + userId)
+            	.pathParam("id", userId)
+                .delete(USERS_DELETE)
             .then()
                 .log().all()
                 .extract().response();

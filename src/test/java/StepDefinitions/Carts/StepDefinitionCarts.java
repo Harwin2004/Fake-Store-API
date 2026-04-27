@@ -1,6 +1,5 @@
 package StepDefinitions.Carts;
 
-import static io.restassured.RestAssured.baseURI;
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.*;
 
@@ -13,6 +12,7 @@ import Utility.ExcelUtil;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
 import io.restassured.response.Response;
+import static Constants.Endpoints.*;
 
 public class StepDefinitionCarts {
 
@@ -49,7 +49,7 @@ public class StepDefinitionCarts {
                 .header("Content-Type", "application/json")
                 .body(requestBody)
                 .when()
-                .post("/carts");
+                .post(CARTS_POST);
 
         response.prettyPrint();
     }
@@ -60,7 +60,7 @@ public class StepDefinitionCarts {
 
         response = given()
                 .when()
-                .get("/carts");
+                .get(CARTS_GET_ALL_PRODUCT);
 
         response.prettyPrint();
     }
@@ -71,7 +71,8 @@ public class StepDefinitionCarts {
 
         response = given()
                 .when()
-                .get("/carts/" + cartId);
+                .pathParam("id", cartId)
+                .get(CARTS_GET_SINGLE_PRODUCT);
     }
 
 
@@ -80,7 +81,8 @@ public class StepDefinitionCarts {
 
         response = given()
                 .when()
-                .delete("/carts/" + cartId);
+                .pathParam("id", cartId)
+                .delete(CARTS_DELETE);
     }
 
 
@@ -119,7 +121,8 @@ public class StepDefinitionCarts {
                     .header("Content-Type", "application/json")
                     .body(cart)
                     .when()
-                    .put("/carts/" + cartId);
+                    .pathParam("id", cartId)
+                    .put(CARTS_UPDATE);
 
             response.prettyPrint();
 
