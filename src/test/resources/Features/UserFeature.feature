@@ -9,6 +9,7 @@ Feature: FakeStore User API Validation (Strict)
     Then verify status code is 201
     And validate created user response
     And verify response time is under 2000 ms
+    And response should match user creation schema
 
   # ================= NEGATIVE CREATE USER USING EXCEL =================
   Scenario: Create user with invalid data using excel
@@ -96,3 +97,11 @@ Feature: FakeStore User API Validation (Strict)
     When the user reads data from "src/test/resources/Data/UserTestData.xlsx" sheet "InvalidUsers"
     And the user sends DELETE request using excel data
     Then validate status code from excel
+    
+    
+Scenario: Update user password using request chaining
+  Given I send GET request to fetch user with id 1
+  And I store the user response body
+  When I update user password with random value
+  And I send PUT request to update user with id 1
+  And the updated password should be reflected

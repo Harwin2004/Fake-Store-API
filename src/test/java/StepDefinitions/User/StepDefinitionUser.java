@@ -5,6 +5,9 @@ import static org.hamcrest.Matchers.*;
 
 import java.util.*;
 
+import org.json.JSONObject;
+import org.testng.Assert;
+
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
 import io.restassured.http.ContentType;
@@ -13,12 +16,16 @@ import io.restassured.response.Response;
 import PojoClasses.User;
 import Utility.ExcelUtility;
 import static Constants.Endpoints.*;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class StepDefinitionUser {
 
     private Response response;
     private User payload;
     private String userId;
+    String userBody;
+    String userRandomNumber;
+    String updatedPassword;
 
     private List<Map<String, String>> excelData;
     private List<String> resultLogs = new ArrayList<>();
@@ -288,5 +295,68 @@ public class StepDefinitionUser {
     public void validateResponseTime(int time) {
 
         response.then().time(lessThan((long) time));
+    }
+
+    @Then("response should match user creation schema")
+    public void validateUserSchema() {
+
+        response.then()
+            .assertThat()
+            .body(matchesJsonSchemaInClasspath("schema/UserSchema.json"));
+    }
+    
+    @Given("I send GET request to fetch user with id {int}")
+    public void get_user(int id) {
+
+        response = given()
+                       .pathParam("id", id)
+                .when()
+                .get(USERS_GET_SINGLE_PRODUCT);
+
+    }
+    @And("I store the user response body")
+    public void store_user_body() {
+
+        userBody = response.getBody().asString();
+
+    }
+    @When("I update user password with random value")
+    public void update_user_password() {
+
+        JSONObject json = new JSONObject(userBody);
+
+        // Generate random number
+        int random = (int) (Math.random() * 1000);
+
+        // Update password
+        json.put("password", String.valueOf(random));
+
+        // Store values
+        updatedPassword = String.valueOf(random);
+        userBody = json.toString();
+
+    }
+
+
+    @And("I send PUT request to update user with id {int}")
+    public void send_put_user(int id) {
+
+        response = given()
+               
+                .header("Content-Type", "application/json")
+                   .pathParam("id", id)
+                .body(userBody)
+                .when()
+                .put(USERS_UPDATE); 
+
+    }
+
+    @And("the updated password should be reflected")
+    public void validate_password() {
+
+        String actualPassword = response.jsonPath().getString("password");
+
+        Assert.assertEquals(actualPassword, updatedPassword);
+
     }
 }

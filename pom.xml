@@ -71,6 +71,18 @@
         <artifactId>extentreports-cucumber7-adapter</artifactId> 
         <version>1.14.0</version> 
     </dependency>
+    
+    <dependency>
+	    <groupId>io.rest-assured</groupId>
+	    <artifactId>json-schema-validator</artifactId>
+	    <version>4.5.1</version>
+	</dependency>
+	
+	<dependency>
+	    <groupId>org.json</groupId>
+	    <artifactId>json</artifactId>
+	    <version>20240303</version>
+	</dependency>
 
   </dependencies>
 
