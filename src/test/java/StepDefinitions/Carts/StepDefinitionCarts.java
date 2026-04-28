@@ -6,18 +6,25 @@ import static org.hamcrest.Matchers.*;
 import java.io.IOException;
 import java.util.*;
 
+import org.json.JSONObject;
+import org.testng.Assert;
+
 import PojoClasses.Cart;
 import PojoClasses.Prod;
 import Utility.ExcelUtil;
 import io.cucumber.datatable.DataTable;
 import io.cucumber.java.en.*;
+import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import static Constants.Endpoints.*;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class StepDefinitionCarts {
 
     Response response;
     Cart requestBody;
+    String cartBody;
+    String updatedUserId;
 
     // For Excel multiple rows
     List<Cart> excelCartList = new ArrayList<>();
@@ -180,4 +187,72 @@ public class StepDefinitionCarts {
                 .body("products.productId.flatten()", everyItem(notNullValue()))
                 .body("products.quantity.flatten()", everyItem(greaterThan(0)));
     }
+
+    @Then("response should match cart schema")
+    public void validateCartSchemaOnly() {
+
+        response.then()
+            .assertThat()
+            .body(matchesJsonSchemaInClasspath("Schema/CartSchema.json"));
+    }
+    
+    @Given("I send GET request to fetch cart with id {int}")
+    public void get_cart(Integer id) {
+      
+
+        response = RestAssured.given()
+                      .pathParam("id", id)
+            .when()
+                .get(CARTS_GET_SINGLE_PRODUCT);
+    }
+
+    @And("I store the cart response body")
+    public void store_cart_body() {
+        cartBody = response.getBody().asString();
+    }
+
+
+    @When("I update cart userId with random number")
+    public void update_cart_userid() {
+
+        // Convert String → JSONObject
+        JSONObject json = new JSONObject(cartBody);
+
+        // Generate random number
+        int randomNum = (int) (Math.random() * 99) + 1;
+
+        // Get existing userId
+        Object userId = json.get("userId");
+
+        // Modify userId (append random number)
+        updatedUserId = userId.toString() + randomNum;
+
+        // Update JSON
+        json.put("userId", updatedUserId);
+
+        // Convert back → String
+        cartBody = json.toString();
+    }
+
+
+    @And("I send PUT request to update cart with id {int}")
+    public void send_put_cart(int cartId) {
+
+        response = RestAssured.given()
+             
+                .header("Content-Type", "application/json")
+                      .pathParam("id", cartId)
+                .body(cartBody)
+            .when()
+                .put(CARTS_UPDATE);
+    }
+
+    @And("the updated userId should be reflected")
+    public void validate_userid() {
+
+        String responseUserId = response.jsonPath().getString("userId");
+
+        Assert.assertEquals(responseUserId, updatedUserId);
+    }
+    
 }

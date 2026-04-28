@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONObject;
 import org.testng.Assert;
 
 import Utility.ExcelUtil;
@@ -15,6 +16,7 @@ import io.restassured.RestAssured;
 import io.restassured.response.Response;
 import io.restassured.specification.RequestSpecification;
 import static Constants.Endpoints.*;
+import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 
 public class StepDefinitionProducts {
 	
@@ -31,6 +33,8 @@ public class StepDefinitionProducts {
 	    String expectedCategory;
 	    int productId;
 	    int negativeProductId;
+	    String productBody;
+	    float randomPrice;
 
 	    @Given("I prepare product payload from excel {string}")
 	    public void prepareProductPayload(String rowNumber) throws IOException  {
@@ -64,6 +68,7 @@ public class StepDefinitionProducts {
 	        response = request
 	                  .when()
 	                .post(PRODUCT_POST);
+	        response.prettyPrint();
 	    }
 	    
 	    @When("I have send a GET request to retrieve all products")
@@ -305,6 +310,68 @@ public class StepDefinitionProducts {
 	            Assert.assertTrue(res.getTime() < time);
 	        }
 	    }
+
+	    @Then("response should match product schema")
+	    public void validateProductSchema() {
+
+	        response.then()
+	            .assertThat()
+	            .body(matchesJsonSchemaInClasspath("schema/productSchema.json"));
+	    }
+	    
+	    @Given("I send GET request to fetch product with id {int}")
+	    public void Getrequest(Integer id) {
+	       
+	        response = RestAssured.given()
+	        		  .pathParam("id", id)
+	                
+	            .when()
+	                .get(PRODUCT_GET_SINGLE_PRODUCT);
+	    }
+	    @And("I store the product response body")
+	    public void store_response_body() {
+	        productBody = response.getBody().asString();
+	    }
+	    
+	  	    
+	@When("I update product price randomly")
+	    public void update_product_price() {
+
+	        // Convert String → JSON
+	        JSONObject json = new JSONObject(productBody);
+
+	        // Generate random price
+	        randomPrice = (float) (Math.random() * 500);
+
+	        // Update field
+	        json.put("price", randomPrice);
+
+	        // Store updated body
+	        productBody = json.toString();
+	    }
+	
+	    @And("I send PUT request to update product")
+	    public void send_put_request() {
+
+	        response = RestAssured.given()
+	              
+	                .header("Content-Type", "application/json")
+	                .body(productBody)
+	                .pathParam("id", productId)
+	            .when()
+	                .put(PRODUCT_UPDATE);
+	    }
+	    @Then("the updated price should be reflected")
+	    public void validate_price() {
+
+	        float responsePrice = response.jsonPath().getFloat("price");
+
+	        Assert.assertEquals(responsePrice, randomPrice);
+	    }
+	    
+	    
+	    
+	    
 	
 
 }

@@ -7,6 +7,7 @@ Feature: Product API
     Then the response status code should be 201 for product
     And validate product fields from excel "<rowNumber>"
     And the response time should be less than 5000 ms for product
+    And response should match product schema
 
 		Examples:
 		    | rowNumber |
@@ -115,3 +116,12 @@ Examples:
     | 1         |
     | 2         |
     | 3         |
+    
+#For request chaining
+Scenario: Update product price using request chaining
+
+  Given I send GET request to fetch product with id 1
+  And I store the product response body
+  When I update product price randomly
+  And I send PUT request to update product
+  Then the updated price should be reflected
