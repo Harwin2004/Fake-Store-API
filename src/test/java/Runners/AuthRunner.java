@@ -7,7 +7,8 @@ import io.cucumber.testng.CucumberOptions;
 @CucumberOptions(
         features = "src/test/resources/Features/AuthFeature.feature",
         glue = {"StepDefinitions.Auth","Hooks"},
-        plugin = {"pretty", "html:target/fake-report.html"},
+        plugin = {"pretty", "html:target/fake-report.html",
+        		"com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"},
         monochrome = true
 )
 

@@ -130,5 +130,6 @@ public class StepDefinitionAuth {
 
         Assert.assertTrue(responseTime < time,
                 "Response time is greater than expected: " + responseTime);
+        
     }
 }

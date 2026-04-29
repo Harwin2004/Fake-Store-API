@@ -2,30 +2,30 @@
 <testng-results ignored="0" total="4" passed="4" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2026-04-20T08:13:47 IST" name="Default suite" finished-at="2026-04-20T08:13:52 IST" duration-ms="5009">
+  <suite started-at="2026-04-29T09:01:47 IST" name="Default suite" finished-at="2026-04-29T09:01:52 IST" duration-ms="4854">
     <groups>
       <group name="cucumber">
-        <method signature="AbstractTestNGCucumberTests.runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.AuthRunner@5fe94a96]" name="runScenario" class="io.cucumber.testng.AbstractTestNGCucumberTests"/>
+        <method signature="AbstractTestNGCucumberTests.runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.AuthRunner@6743e411]" name="runScenario" class="io.cucumber.testng.AbstractTestNGCucumberTests"/>
       </group> <!-- cucumber -->
     </groups>
-    <test started-at="2026-04-20T08:13:47 IST" name="Default test" finished-at="2026-04-20T08:13:52 IST" duration-ms="5009">
+    <test started-at="2026-04-29T09:01:47 IST" name="Default test" finished-at="2026-04-29T09:01:52 IST" duration-ms="4854">
       <class name="Runners.AuthRunner">
-        <test-method is-config="true" signature="setUpClass(org.testng.ITestContext)[pri:0, instance:Runners.AuthRunner@5fe94a96]" started-at="2026-04-20T08:13:47 IST" name="setUpClass" finished-at="2026-04-20T08:13:47 IST" duration-ms="512" status="PASS">
+        <test-method is-config="true" signature="setUpClass(org.testng.ITestContext)[pri:0, instance:Runners.AuthRunner@6743e411]" started-at="2026-04-29T09:01:47 IST" name="setUpClass" finished-at="2026-04-29T09:01:48 IST" duration-ms="522" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA[org.testng.TestRunner@5beb6be2]]>
+                <![CDATA[org.testng.TestRunner@38f63756]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setUpClass -->
-        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.AuthRunner@5fe94a96]" started-at="2026-04-20T08:13:47 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:13:50 IST" duration-ms="2749" status="PASS">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.AuthRunner@6743e411]" started-at="2026-04-29T09:01:48 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-29T09:01:51 IST" duration-ms="3025" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA["Login with valid credentials"]]>
+                <![CDATA["Login using Excel data"]]>
               </value>
             </param>
             <param index="1">
@@ -37,11 +37,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runScenario -->
-        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.AuthRunner@5fe94a96]" started-at="2026-04-20T08:13:50 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:13:51 IST" duration-ms="347" status="PASS">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.AuthRunner@6743e411]" started-at="2026-04-29T09:01:51 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-29T09:01:51 IST" duration-ms="356" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA["Attempt login with missing username"]]>
+                <![CDATA["Attempt login with missing username using DataTable"]]>
               </value>
             </param>
             <param index="1">
@@ -53,7 +53,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runScenario -->
-        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.AuthRunner@5fe94a96]" started-at="2026-04-20T08:13:51 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:13:51 IST" duration-ms="932" status="PASS">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.AuthRunner@6743e411]" started-at="2026-04-29T09:01:51 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-29T09:01:52 IST" duration-ms="338" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -69,11 +69,11 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runScenario -->
-        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.AuthRunner@5fe94a96]" started-at="2026-04-20T08:13:51 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-20T08:13:52 IST" duration-ms="354" status="PASS">
+        <test-method signature="runScenario(io.cucumber.testng.PickleWrapper,io.cucumber.testng.FeatureWrapper)[pri:0, instance:Runners.AuthRunner@6743e411]" started-at="2026-04-29T09:01:52 IST" name="runScenario" description="Runs Cucumber Scenarios" data-provider="scenarios" finished-at="2026-04-29T09:01:52 IST" duration-ms="346" status="PASS">
           <params>
             <param index="0">
               <value>
-                <![CDATA["Attempt login with empty body"]]>
+                <![CDATA["Attempt login with empty or invalid body"]]>
               </value>
             </param>
             <param index="1">
@@ -85,7 +85,7 @@
           <reporter-output>
           </reporter-output>
         </test-method> <!-- runScenario -->
-        <test-method is-config="true" signature="tearDownClass()[pri:0, instance:Runners.AuthRunner@5fe94a96]" started-at="2026-04-20T08:13:52 IST" name="tearDownClass" finished-at="2026-04-20T08:13:52 IST" duration-ms="65" status="PASS">
+        <test-method is-config="true" signature="tearDownClass()[pri:0, instance:Runners.AuthRunner@6743e411]" started-at="2026-04-29T09:01:52 IST" name="tearDownClass" finished-at="2026-04-29T09:01:52 IST" duration-ms="231" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- tearDownClass -->
